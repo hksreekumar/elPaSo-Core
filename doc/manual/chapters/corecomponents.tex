@@ -1,0 +1,218 @@
+\chapter{Components in elPaSo Core}
+\label{chap:eCoreComponents}
+
+In this chapter, the main components constituiting the eCore project is described.
+
+\section{Finite element method}
+\subsection{Analysis}
+\begin{table}[h!]
+    \centering
+    \caption{Analysis types in elPaSo}
+    \begin{tabular}{llcc}
+        \hline
+        Functionality                                   & Identifier      & elPaSo Core  & elPaSo Research \\ \hline
+        Basic frequency domain steady state analysis    & frequency-basic & $\checkmark$ &                 \\
+        Advanced frequency domain steady state analysis & frequency       &              & $\checkmark$    \\
+        Time domain analysis                            & time            &              & $\checkmark$    \\
+        Static analysis                                 & static          &              & $\checkmark$    \\
+        Geometrical optimization                        & geoopt          &              & $\checkmark$    \\
+        Eigenvalue analysis                             & eigen           &              & $\checkmark$    \\
+        Model order reduction                           & mor-offline     &              & $\checkmark$    \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Elements}
+
+    \begin{longtable}{lcc}
+        \hline
+        Identifier          & elPaSo Core   & elPaSo Research  \\ \hline
+        \multicolumn{3}{c}{Structure   | Beam elements}        \\ \hline
+        BeamBernoulli       & $\checkmark$  &                  \\
+        BeamTimoshenko      & $\checkmark$  &                  \\
+        BeamBernoulli10     & $\checkmark$  &                  \\
+        BeamTimoshenko10    & $\checkmark$  &                  \\
+        BeamBernoulli12     & $\checkmark$  &                  \\
+        BeamTimoshenko12    & $\checkmark$  &                  \\
+        BeamBernoulli10nl   &               & $\checkmark$     \\
+        BeamTimoshenko10nl  &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure | Brick elements}         \\ \hline
+        Brick8              & $\checkmark$  &                  \\
+        Brick20             &               & $\checkmark$     \\
+        Brick27             &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure | Plate elements}         \\ \hline
+        Kirch4              & $\checkmark$  &                  \\
+        DSG3                &               & $\checkmark$     \\
+        DSG4                & $\checkmark$  &                  \\
+        DSG9                &               & $\checkmark$     \\
+        DSG9pre             &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure | Disc   elements}        \\ \hline
+        Disc3               &               & $\checkmark$     \\
+        Disc4               & $\checkmark$  &                  \\
+        Disc9               &               & $\checkmark$     \\
+        Disc9s              &               & $\checkmark$     \\
+        DiscDr4             &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure | Shell elements}         \\ \hline
+        PlShell3            &               & $\checkmark$     \\
+        PlShell4            &               & $\checkmark$     \\
+        PlShell9            &               & $\checkmark$     \\
+        PlShell9pre         &               & $\checkmark$     \\
+        PlShellDr4          &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure |   Tetrahedron elements} \\ \hline
+        Tetra4              &               & $\checkmark$     \\
+        Tetra10             &               & $\checkmark$     \\
+        Tetra4L             &               & $\checkmark$     \\
+        Tetra10L            &               & $\checkmark$     \\
+        Tetra16             &               & $\checkmark$     \\
+        Tetra16L            &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure | Spring elements}        \\ \hline
+        Spring              & $\checkmark$  &                  \\
+        Springz             & $\checkmark$  &                  \\ 
+        SpringBC            & $\checkmark$  &                  \\ 
+        SpringBCx            & $\checkmark$  &                  \\ 
+        SpringBCy            & $\checkmark$  &                  \\ 
+        SpringBCz            & $\checkmark$  &                  \\
+        SpringBCrx            & $\checkmark$  &                  \\ 
+        SpringBCry            & $\checkmark$  &                  \\ 
+        SpringBCrz            & $\checkmark$  &                  \\ \hline
+        \multicolumn{3}{c}{Structure | Point mass}             \\ \hline
+        Pointmass           & $\checkmark$  &                  \\ \hline
+        \multicolumn{3}{c}{Structure | Cable elements}         \\ \hline
+        Cable2D             &               & $\checkmark$     \\
+        Cable3D             &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Structure | Porous elements}        \\ \hline
+        PoroPlateQ2P1       &               & $\checkmark$     \\
+        PoroPlateQ2P2       &               & $\checkmark$     \\
+        PoroPlateQ2P3       &               & $\checkmark$     \\
+        PoroPlateQ3P1       &               & $\checkmark$     \\
+        PoroPlateQ3P3       &               & $\checkmark$     \\
+        DiscPQ2P1           &               & $\checkmark$     \\
+        ShellQ2P1           &               & $\checkmark$     \\
+        PoroPlateKienzler4  &               & $\checkmark$     \\
+        PoroDiscKienzler4   &               & $\checkmark$     \\
+        PoroShellKienzler4  &               & $\checkmark$     \\
+        Poro3dUP8           &               & $\checkmark$     \\
+        Poro3dUP27          &               & $\checkmark$     \\
+        Poro3dUU8           &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Fluid | Linear elements}            \\ \hline
+        Fluid4              &               & $\checkmark$     \\ \hline
+        Fluid8              & $\checkmark$  &                  \\ \hline
+        Fluid27             &               & $\checkmark$     \\
+        Fluid2d4            &               & $\checkmark$     \\
+        Fluid2d9            &               & $\checkmark$     \\ \hline
+        \multicolumn{3}{c}{Fluid | Flow elements}              \\ \hline
+        FF4                 &               & $\checkmark$     \\
+        FF9                 &               & $\checkmark$     \\ \hline
+        \caption{Element types in elPaSo}
+\end{longtable}
+
+\subsection{Materials}
+Elpaso is capable of implementing different material models for acoustical simulations. For
+example: orthotropic, isotropic, fluid, spring, etc. Each material has its own behavior and
+characteristics, each of them being described within the syntax against the respective property
+values. See Table \ref{tab:MaterialTypes} for an overview of material types offered in eCore.
+
+\begin{longtable}{p{6cm}p{6cm}cc}
+    \hline
+    Functionality                                                                                              & Identifier                        & \multicolumn{1}{c}{elPaSo Core} & \multicolumn{1}{c}{elPaSo Research} \\ \hline
+    \multicolumn{4}{c}{Structure | Isotropic materials}                                                                                                                                                                    \\ \hline
+    Linear elastic isotropic                                                                                   & STR\_LIN\_ELA\_ISO\_DIR           & $\checkmark$                    &                                     \\
+    Linear viscoelastic isotropic                                                                              & STR\_LIN\_VIS\_ISO\_DIR           & $\checkmark$                    &                                     \\
+    Non-linear elastic isotropic                                                                               & STR\_NL\_ELA\_ISO\_DIR            &                                 & $\checkmark$                        \\
+    Linear viscoelastic isotropic   implementing Cremer/Heckl constrained layer damping (CLD) model            & STR\_LIN\_VIS\_ISO\_CLDCH         &                                 & $\checkmark$                        \\
+    Linear viscoelastic isotropic   implementing Ross/Kerwin/Ungar (RKU) constrained layer damping (CLD) model & STR\_LIN\_VIS\_ISO\_CLDRKU        &                                 & $\checkmark$                        \\
+    Linear viscoelastic isotropic   implementing RKU CLD and laminate theory                                   & STR\_LIN\_VIS\_ISO\_CLDRKU\_LAMWA &                                 & $\checkmark$                        \\\hline
+    \multicolumn{4}{c}{Structure |   Orthotropic materials}                                                                                                                                                                \\ \hline
+    Linear elastic orthotropic                                                                                 & STR\_LIN\_ELA\_ORT\_DIR           &                                 & $\checkmark$                        \\
+    Linear viscoelastic orthotropic                                                                            & STR\_LIN\_VIS\_ORT\_DIR           &                                 & $\checkmark$                        \\
+    Linear viscoelastic orthotropic laminate                                                                   & STR\_LIN\_VIS\_ORT\_LAM\_NOPRE    &                                 & $\checkmark$                        \\
+    Linear viscoelastic orthotropic laminate   prestressed                                                     & STR\_LIN\_VIS\_ORT\_LAM           &                                 & $\checkmark$                        \\\hline
+    \multicolumn{4}{c}{Structure | Spring}                                                                                                                                                                                 \\\hline
+    Linear spring orthotropic                                                                                  & STR\_LIN\_SPR\_ORT\_DIR           & $\checkmark$                    &                                     \\\hline
+    \multicolumn{4}{c}{Structure | Mass}                                                                                                                                                                                   \\\hline
+    Point mass                                                                                                 & STR\_LIN\_POINTMASS               & $\checkmark$                    &                                     \\\hline
+    \multicolumn{4}{c}{Fluid | Acoustic}                                                                                                                                                                                   \\\hline
+    Linear acoustic fluid undamped                                                                             & AF\_LIN\_UAF\_ISO\_DIR            & $\checkmark$                    &                                     \\
+    Linear acoustic fluid damped                                                                               & AF\_LIN\_EQF\_ISO\_DIR            &                                 & $\checkmark$                        \\
+    Linear acoustic fluid lossy                                                                                & AF\_LIN\_VIS\_LF\_DIR             &                                 & $\checkmark$                        \\
+    Linear acoustic fluid to treat porous   media                                                              & AF\_LIN\_VIS\_ISO\_POROUS         &                                 & $\checkmark$                        \\
+    Linear acoustic cloaking fluid                                                                             & AF\_LIN\_CLK\_AISO\_DIR           &                                 & $\checkmark$                        \\\hline
+    \multicolumn{4}{c}{Structure |   Poroelastic materials}                                                                                                                                                                \\\hline
+    Linear poroelastic                                                                                         & STR\_LIN\_ELA\_POR\_DIR           &                                 & $\checkmark$                        \\
+    Linear poroelastic for plate elements   based on Biot's theory                                             & STR\_LIN\_ELA\_POR\_PLATE         &                                 & $\checkmark$                        \\
+    Linear poroelastic for foams                                                                               & STR\_LIN\_ELA\_POR\_FOAM          &                                 & $\checkmark$                        \\
+    Linear poroelastic 3D elements based on   Biot's theory                                                    & STR\_LIN\_ELA\_POR\_3D            &                                 & $\checkmark$                        \\
+    Linear poroelastic 3D elements with loss                                                                   & STR\_LIN\_VIS\_POR\_3D            &                                 & $\checkmark$                        \\
+    Linear poroelastic 3D elements with loss   and compression modulus                                         & STR\_LIN\_VIS\_POR\_3DCOMP        &                                 & $\checkmark$                        \\
+    Linear poroelastic 3D elements trans                                                                       & STR\_LIN\_ELA\_POR\_3DTRANS       &                                 & $\checkmark$                        \\\hline
+    \multicolumn{4}{c}{Structure |   Elasticplatic materials}                                                                                                                                                              \\\hline
+    Non-linear elasticplastic cap model                                                                        & STR\_NL\_ELPLA\_ISO\_CM           &                                 & $\checkmark$                        \\
+    Non-linear elasticplastic cap model with   outer adjustment                                                & STR\_NL\_ELPLA\_ISO\_CMO          &                                 & $\checkmark$                        \\
+    Non-linear elasticplastic Drucker Prager   parameters                                                      & STR\_NL\_ELPLA\_ISO\_DP           &                                 & $\checkmark$                        \\
+    Non-linear elasticplastic Drucker Prager   parameters ideal plastic                                        & STR\_NL\_ELPLA\_ISO\_DPIP         &                                 & $\checkmark$                        \\
+    Non-linear elasticplastic Drucker Prager   parameters with outer adjustment                                & STR\_NL\_ELPLA\_ISO\_DPO          &                                 & $\checkmark$                        \\
+    Non-linear elasticplastic Drucker Prager   parameters with outer adjustment ideal plastic                  & STR\_NL\_ELPLA\_ISO\_DPOIP        &                                 & $\checkmark$                       \\ \hline
+    \caption{Material types in elPaSo}
+    \label{tab:MaterialTypes}
+\end{longtable}
+
+\subsection{Loads}
+
+\begin{table}[H]
+    \centering
+    \caption{Load types in elPaSo}
+    \begin{tabular}{p{6cm}lcc}
+        \hline
+    Functionality                                                          & Identifier                 & \multicolumn{1}{c}{elPaSo Core} & \multicolumn{1}{c}{elPaSo Research} \\ \hline
+    \multicolumn{4}{c}{Nodal loads}                                                                                                                                             \\ \hline
+    Force/moment on a node                                                 & point\_force               & $\checkmark$                    &                                     \\
+    Force/moment on a node - time dependent                                & structuretime              &                                 & $\checkmark$                        \\
+    Sound source at a fluid node                                           & fluid                      & $\checkmark$                    &                                     \\ \hline
+    \multicolumn{4}{c}{Element loads}                                                                                                                                           \\ \hline
+    Frequency dependent element loads                                      & plane\_wave                &                                 & $\checkmark$                        \\
+    Frequency dependent element loads TBL                                  & turbulent\_boundary\_layer &                                 & $\checkmark$                        \\
+    Normal velocity vn or flux q acting normal to surface of fluid element & v\_n                       &                                 & $\checkmark$                        \\ \hline
+    \end{tabular}
+\end{table}
+
+\subsection{Boundary conditions}
+\begin{table}[H]
+    \centering
+    \caption{Boundary condition types in elPaSo}
+    \begin{tabular}{llcc}
+        \hline
+    Functionality                                 & Identifier   & \multicolumn{1}{c}{elPaSo Core} & \multicolumn{1}{c}{elPaSo Research} \\ \hline
+    Structural nodal constraints                  & structural   & $\checkmark$                    &                                     \\
+    Acoustic nodal constraints                    & acoustic     & $\checkmark$                    &                                     \\
+    Acoustic nodal constraints, oblique incidence & fluidoblique &                                 & $\checkmark$                        \\ \hline
+    \end{tabular}
+    \end{table}
+
+\subsection{Coupling interfaces}
+
+\begin{table}[H]
+    \centering
+    \caption{Coupling interface types in elPaSo}
+    \begin{tabular}{lcc}
+        \hline
+    Identifier                  & \multicolumn{1}{c}{elPaSo Core} & \multicolumn{1}{c}{elPaSo Research} \\ \hline
+    \multicolumn{3}{c}{Conforming interface elements}                                                   \\ \hline
+    InterfaceBeam               & $\checkmark$                    &                                     \\
+    InterfaceFFPoro3dUP         &                                 & $\checkmark$                        \\
+    InterfaceFFShell            &                                 & $\checkmark$                        \\
+    InterfaceKirchhoff          & $\checkmark$                    &                                     \\
+    InterfaceMindlin            & $\checkmark$                    &                                     \\
+    InterfaceMindlinEquiporo    &                                 & $\checkmark$                        \\
+    InterfaceMindlinPoro3dUP    &                                 & $\checkmark$                        \\
+    InterfacePlaneShellPoro2dUP &                                 & $\checkmark$                        \\
+    MultiPointConstraint        &                                 & $\checkmark$                        \\ \hline
+    \multicolumn{3}{c}{Non-conforming interface elements}                                               \\ \hline
+    NCInterfaceMindlin          &                                 & $\checkmark$                        \\
+    NCInterfaceMindlinEquiporo  &                                 & $\checkmark$                        \\ \hline
+    \end{tabular}
+    \end{table}
+
+\section{Input file definition}
+Input to elPaSo is currently limited to tailor-made HDF5 file format produced by the elPaSo Preprocessing tool. Support for other common file formats is in development. However, you can develop a new parser to support your input file by adapting from the parser interface class in cFemParserInterface.h. Contact us if you require support.
+
+\section{Output file formats}
+Various output file formats are support for outputting simulation results. Currently eCore supports HDF5, VTK and STP.

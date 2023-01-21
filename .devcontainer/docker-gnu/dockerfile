@@ -1,0 +1,39 @@
+FROM ubuntu:20.04
+LABEL maintainer="Harikrishnan Sreekumar <hk.sreekumar@tu-braunschweig.de>"
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV WD /tmp
+
+WORKDIR ${WD}
+USER root
+
+ENV SOFT_DIR /software
+ENV GNUC_V 8
+
+RUN mkdir $SOFT_DIR && \
+    #
+    # Install elPaSo prerequisites
+    apt-get update && \
+    apt-get install -y --no-install-recommends build-essential wget make python3 python3-pip libx11-dev zlib1g-dev openssh-server cmake git clang-tidy lcov && \
+    pip3 install tikzplotlib fpdf PyPDF2 python-gitlab gitpython pandas zipfile36 h5py && \
+    # Conan setup 
+    pip3 install conan && \
+    conan remote remove conancenter && \
+    #conan remote remove conan-center && \
+    conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan && \
+    wget --no-check-certificate https://cloudstorage.tu-braunschweig.de/dl/fi4KjSQYaym7wdoWEe7eyKi6/conan-settings.yml && \
+    mv conan-settings.yml /root/.conan/settings.yml && \
+    #
+    # GNU Compilers
+    apt-get install -y --no-install-recommends gcc-${GNUC_V} g++-${GNUC_V} gfortran-${GNUC_V} && \
+    ## symbolic linking GNU Compilers
+    rm -f /usr/bin/gcc /usr/bin/g++ /usr/bin/gfortran /usr/bin/gcov && \
+    ln -s /usr/bin/gcc-${GNUC_V} /usr/bin/gcc && \
+    ln -s /usr/bin/g++-${GNUC_V} /usr/bin/g++ && \
+    ln -s /usr/bin/gfortran-${GNUC_V} /usr/bin/gfortran && \
+    ln -s /usr/bin/gcov-${GNUC_V} /usr/bin/gcov && \
+    ## Check GNU Compiler Versions
+    gcc --version && \
+    g++ --version && \
+    gfortran --version && \
+    gcov --version

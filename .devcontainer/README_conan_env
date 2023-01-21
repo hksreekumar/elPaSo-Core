@@ -1,0 +1,2 @@
+# create a file named conan.env
+# set conan password as "CONAN_PASSWORD=<YOUR_SSH_KEY>"

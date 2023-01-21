@@ -3,10 +3,10 @@
 #
 # 21.09.2021
 # Harikrishnan Sreekumar
-# Institut für Akustik, Technische Universität Braunschweig
+# Institut fï¿½r Akustik, Technische Universitï¿½t Braunschweig
 #---------------------------------------------------------------------------#
 
-SET(SPECIFIC_FILES ${ELPASO_SOURCE_DIR}/elpaso/source/main/main.cpp)
+SET(SPECIFIC_FILES ${ELPASO_SOURCE_DIR}/elpasoCore/source/main/main.cpp)
 SET(ALL_SOURCES ${ALL_SOURCES} ${SPECIFIC_FILES})
 SOURCE_GROUP(main FILES ${SPECIFIC_FILES})
 	

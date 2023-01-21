@@ -3,7 +3,7 @@
 #
 # 14.10.2020
 # Harikrishnan Sreekumar
-# Institut für Akustik, Technische Universität Braunschweig
+# Institut fï¿½r Akustik, Technische Universitï¿½t Braunschweig
 #
 # CMake project rewritten from THE INFAM PROJECT, Marco Schauer, 22.10.2008
 #---------------------------------------------------------------------------#
@@ -21,10 +21,10 @@ IF(${ELPASO_OS_LIN_x86_64} MATCHES FOUND)
 	SET(CMAKE_BUILD_TYPE Release)
 
 	ADD_DEFINITIONS(-DELPASO_TEST)
-	ADD_DEFINITIONS(-DELPASO_TEST_RESOURCE_DIR="${ELPASO_SOURCE_DIR}/elpaso/test/resources/")
+	ADD_DEFINITIONS(-DELPASO_TEST_RESOURCE_DIR="${ELPASO_SOURCE_DIR}/elpasoCore/test/resources/")
 
 	SET(ROOT_DIR ${ELPASO_SOURCE_DIR})
-	SET(SOURCE_ELPASO ${ROOT_DIR}/elpaso/source)
+	SET(SOURCE_ELPASO ${ROOT_DIR}/elpasoCore/source)
 	
 	IF(LINK_CONAN)
 		MESSAGE(STATUS "ELPASO INSTALLATION USING CONAN REPOS")

@@ -1,0 +1,31 @@
+#include element
+SET(SUBDIRPATH element) 
+SET(OPTION_LABEL BUILD_Element)
+
+SET(CURRENT_DIR ${SOURCE_ELPASO}/${SUBDIRPATH})
+
+OPTION(${OPTION_LABEL} "${CURRENT_DIR}" ON)
+IF(${OPTION_LABEL})
+   COLLECT_PACKAGE_DATA( ${CURRENT_DIR} ${SUBDIRPATH} ALL_SOURCES)
+ENDIF(${OPTION_LABEL})
+
+#additional includes
+  INCLUDE(${SOURCE_ELPASO}/element/fluid/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/interface/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/ncinterface/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/load/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/linear/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/linear/beam/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/linear/brick/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/linear/disc/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/linear/mass/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/linear/plate/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/linear/poro/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/linear/shell/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/structure/linear/spring/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/linear/tetra/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/nonlinear/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/nonlinear/cable/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/element/structure/nonlinear/beam/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/element/fluidflow/CMakePackage.cmake)

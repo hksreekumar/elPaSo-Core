@@ -1,0 +1,21 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: >-
+  elPaSo Core - Elementary parallel solver core module for
+  high performance vibroacoustic simulations
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Sabine C.
+    family-names: Langer
+    affiliation: 'TU Braunschweig, Institute for Acoustics'
+repository-code: 'https://git.rz.tu-bs.de/akustik/elPaSo-Core/'
+keywords:
+  - vibroacoustics
+  - finite element method
+  - parallel computing
+license: LGPL-3.0

@@ -1,0 +1,79 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt,a4paper,oneside]{scrreprt}
+\usepackage[utf8]{inputenc}
+%\usepackage[ngerman]{babel}
+\usepackage{units,tabularx,lipsum,longtable}
+\usepackage[table]{xcolor}
+\usepackage[margin=2cm]{geometry}
+\usepackage[green,extramargin,bcor=1.2cm]{tubsdoc}
+\defbglayout[sender=top,pages=single]{newlayout}{ %
+\showtubslogo[left] 	%	TUBS-Logo
+%\showtopline 			%	Rote Linie oben
+}
+\logo{\includegraphics{./images/logo/InA-TECH-elPaSo-rgb.pdf}}
+\usepackage[htt]{hyphenat}
+\usepackage[obeyspaces]{url} %Darstellung der Dateipfade und Programmiercode im Fließtext
+\expandafter\def\expandafter\UrlBreaks\expandafter{\UrlBreaks%  save the current one
+  \do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j%
+  \do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t%
+  \do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D%
+  \do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N%
+  \do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X%
+  \do\Y\do\Z}
+\usepackage{listings} %Programmiercode darstellen
+\usepackage{amssymb, mathtools}
+\usepackage{enumitem}
+\renewcommand{\tt}{\ttfamily}
+
+%netbeans coloring style for C++
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\lstset{frame={},
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{black},  
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+  %define new color style for member variables
+  moredelim=[is][\color{dkgreen}]{$m:}{:m$},
+  %define new color style for define keywords
+  moredelim=[s][\color{green}]{\#{}ifndef}{\ },
+  moredelim=[s][\color{green}]{\#{}define}{\ },
+  moredelim=[s][\color{green}]{\#{}endif}{\ },
+}
+
+\usepackage{multirow}
+\usepackage{adjustbox}
+
+\usepackage{float}
+\usepackage{longtable}
+\usepackage[backend=bibtex,style=numeric,natbib=true, maxbibnames=99]{biblatex}
+\bibliography{literature/keypubelpaso}
+
+\begin{document}
+\parindent 0pt
+\title{elPaSo-Core Manual}
+\date{\the\year{}}
+\author{\Large Institute for Acoustics, Technische Universität Braunschweig}
+\maketitle
+\pagenumbering{roman}
+\tableofcontents
+\cleardoublepage
+%\normalem
+\pagenumbering{arabic}
+
+\input{./chapters/introduction.tex}
+\input{./chapters/corecomponents.tex}
+\input{./chapters/usage.tex}
+%\input{./chapters/developing.tex}
+
+\end{document}

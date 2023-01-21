@@ -1,0 +1,7 @@
+{
+	"name": "elPaSo-Docker",
+	//"image": "git.rz.tu-bs.de:4567/akustik/elpaso/elpaso-baseimage-ubuntu-x64:22.12.1",
+	"image": "git.rz.tu-bs.de:4567/akustik/elpaso/elpaso-intelstudio-ubuntu-x64:22.12.1",
+	"extensions": ["ms-vscode.cpptools", "ms-vscode.cmake-tools", "ms-vscode.makefile-tools","visualstudioexptteam.vscodeintellicode","notskm.clang-tidy","donjayamanne.githistory","mhutchie.git-graph"],
+	"runArgs": ["--env-file", ".devcontainer/conan.env"]	
+}

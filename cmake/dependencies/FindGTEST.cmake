@@ -3,7 +3,7 @@
 #
 # 14.10.2020
 # Harikrishnan Sreekumar
-# Institut für Akustik, Technische Universität Braunschweig
+# Institut fï¿½r Akustik, Technische Universitï¿½t Braunschweig
 #---------------------------------------------------------------------------#
 
 # ---- Start point for GTEST libs finding -----------------------------------------------------------#
@@ -11,7 +11,7 @@ MESSAGE("> Finding GTEST ...")
 
 IF(${ELPASO_OS_LIN_x86_64} MATCHES FOUND)
     # ---- Set Root Directory -----------------------------------------------------------------------#
-			SET(GTEST_ROOT_DIR "${ELPASO_SOURCE_DIR}/3rdParty/googletest")          # GTEST_DIR
+    SET(GTEST_ROOT_DIR "${ELPASO_SOURCE_DIR}/3rdParty/googletest")          # GTEST_DIR
     
     IF(EXISTS ${GTEST_ROOT_DIR})
         # ---- Set each library ---------------------------------------------------------------------#

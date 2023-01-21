@@ -3,10 +3,13 @@
 #
 # 14.10.2020
 # Harikrishnan Sreekumar
-# Institut f�r Akustik, Technische Universit�t Braunschweig
+# Institute for Acoustics, Technische Universitaet Braunschweig
 #---------------------------------------------------------------------------#
 
 MACRO(DEPENDENCY_CONFIG)
+	# ---- Master control for dynamic library or executable ----------------#
+	OPTION(GEN_DLIB			"elPaSo DYNAMIC LIB"	OFF) # switch off for generating exectutable
+
 	# ---- Master control for Lib installation from CONAN repos ------------#
 	OPTION(LINK_CONAN		"CONAN LIBS"		ON)
 
@@ -32,18 +35,22 @@ MACRO(DEPENDENCY_CONFIG)
 	OPTION(LINK_PETSC		"PETSc LIB"			ON)
 	OPTION(LINK_SLEPC		"SLEPc LIB"			ON)
 	OPTION(LINK_ARPACK		"ARPACK LIB"		ON)
-	OPTION(LINK_XMLIO		"XMLIO LIB"			ON)
+	OPTION(LINK_XMLIO		"XMLIO LIB"			OFF)
 	OPTION(LINK_GZSTREAM	"GZSTREAM LIB"		ON)
 	OPTION(LINK_HDF5		"HDF5 LIB"			ON)
 	OPTION(LINK_MUMPS  		"MUMPS SOLVER"		ON)
 	OPTION(LINK_PARDISO		"PARDISO SOLVER"	ON)
-	OPTION(LINK_COV			"COV TOOLS"			ON)
+	OPTION(LINK_COV			"COV TOOLS"			OFF)
 	OPTION(LINK_GTEST		"GTEST LIB"			ON)
 	OPTION(LINK_CLANGTIDY	"CLANG-TIDY"		OFF)
 	OPTION(LINK_BOOST		"BOOST LIB"			OFF)
 	
-	ADD_DEFINITIONS(-DUSE_HDF5_INP)
-	ADD_DEFINITIONS(-DUSE_HDF5_OUT)
+	# ---- Switch for different FE module ----------------------------------#
+	OPTION(INCLUDE_ANALYSIS_ESSENTIALS		"Analysis Essential"	ON)
+	OPTION(INCLUDE_BC_ESSENTIALS			"BC Essential"			ON)
+	OPTION(INCLUDE_ELEMENT_ESSENTIALS		"Elements Essential"	ON)
+	OPTION(INCLUDE_MATERIAL_ESSENTIALS		"Materials Essentials"	ON)
+	OPTION(INCLUDE_HDF5						"HDF5"					ON)
 
 	# ---- Set LIBS to be linked by Cmake ----------------------------------#
 	SET(PETSC_ARCH_REAL ${ELPASO_COMPILER_ID}-cxx-o)

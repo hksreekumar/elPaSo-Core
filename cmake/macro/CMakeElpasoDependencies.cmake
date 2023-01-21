@@ -3,7 +3,7 @@
 #
 # 14.10.2020
 # Harikrishnan Sreekumar
-# Institut für Akustik, Technische Universität Braunschweig
+# Institut fï¿½r Akustik, Technische Universitï¿½t Braunschweig
 #
 # CMake project rewritten from THE INFAM PROJECT, Marco Schauer, 08.03.2011
 #---------------------------------------------------------------------------#

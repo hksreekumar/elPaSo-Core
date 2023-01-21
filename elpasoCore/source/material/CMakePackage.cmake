@@ -1,0 +1,31 @@
+#include material
+SET(SUBDIRPATH material) 
+SET(OPTION_LABEL BUILD_Material)
+
+SET(CURRENT_DIR ${SOURCE_ELPASO}/${SUBDIRPATH})
+
+OPTION(${OPTION_LABEL} "${CURRENT_DIR}" ON)
+IF(${OPTION_LABEL})
+   COLLECT_PACKAGE_DATA( ${CURRENT_DIR} ${SUBDIRPATH} ALL_SOURCES)
+ENDIF(${OPTION_LABEL})
+
+#additional includes
+  INCLUDE(${SOURCE_ELPASO}/material/fluid/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/fluid/linear/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/fluid/linear/elastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/fluid/linear/viscoelastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/fluid/linear/cloaking/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/poroelastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/poroelastic/linear/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/structure/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/linear/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/linear/elastic/CMakePackage.cmake)
+  INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/linear/viscoelastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/nonlinear/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/nonlinear/elastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/isotrop/nonlinear/elasticplastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/orthotrop/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/orthotrop/linear/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/orthotrop/linear/elastic/CMakePackage.cmake)
+  #INCLUDE(${SOURCE_ELPASO}/material/structure/orthotrop/linear/viscoelastic/CMakePackage.cmake)

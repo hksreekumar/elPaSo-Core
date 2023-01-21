@@ -3,7 +3,7 @@
 #
 # 21.09.2021
 # Harikrishnan Sreekumar
-# Institut für Akustik, Technische Universität Braunschweig
+# Institut fï¿½r Akustik, Technische Universitï¿½t Braunschweig
 #---------------------------------------------------------------------------#
 
 # Set the build directory acc. to conan
@@ -47,7 +47,7 @@ conan_cmake_install(PATH_OR_REFERENCE .
                 BUILD missing
                 SETTINGS ${settings})
 
-SET(SPECIFIC_FILES ${ELPASO_SOURCE_DIR}/elpaso/source/main/main.cpp)
+SET(SPECIFIC_FILES ${ELPASO_SOURCE_DIR}/elpasoCore/source/main/main.cpp)
 SET(ALL_SOURCES ${ALL_SOURCES} ${SPECIFIC_FILES})
 SOURCE_GROUP(main FILES ${SPECIFIC_FILES})
 	
@@ -155,7 +155,7 @@ IF(LINK_COV)
 		MESSAGE("> Intel codecov activated")
 	ELSEIF(ELPASO_COMPILER_GNU)
 		SET(GCC_COVERAGE_COMPILE_FLAGS "-g -fprofile-arcs -ftest-coverage")
-		SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
+		SET(GCC_COVERAGE_LINK_FLAGS    "-g -fprofile-arcs -ftest-coverage")
 		SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 		SET(CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}")
 		MESSAGE("> GLCOV activated")

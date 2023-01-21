@@ -1,0 +1,31 @@
+FROM git.rz.tu-bs.de:4567/akustik/elpaso-core/elpasocore-baseimage-ubuntu-x64:23.01.1
+LABEL maintainer="Harikrishnan Sreekumar <hk.sreekumar@tu-braunschweig.de>"
+
+ENV DEBIAN_FRONTEND noninteractive
+ENV WD /software
+
+WORKDIR ${WD}
+USER root
+
+COPY elPaSo-Core ${WD}/elPaSo-Core
+
+RUN cd ${WD}/elPaSo-Core && \
+    rm -rf project && \
+    mkdir project && \
+    # build executable ------------------
+    make cmake-gen && \
+    make elpaso-gnu && \
+    make elpaso-build && \
+    # build library ---------------------
+    make cmake-gen-lib && \
+    make elpaso-gnu && \
+    make elpasolib-build && \
+    rm -rf project && \
+    # remove conan symbols and heavy data
+    rm -rf /root/.conan/data/* && \
+    rm ${WD}/elPaSo-Core/bin/lib/*.a
+
+## run environment
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:${WD}/elPaSo-Core/bin/lib
+ENV OPAL_PREFIX ${WD}/elPaSo-Core/bin/
+ENV PATH $PATH:${WD}/elPaSo-Core/bin/
