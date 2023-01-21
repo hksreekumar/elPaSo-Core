@@ -1,0 +1,165 @@
+# YAML script for the CI/CD execution for elPaSo intel build
+#
+# Author: Harikrishnan Sreekumar, Institute for Acoustics, TU Braunschweig, Germany
+
+# elPaSo CI/CD stages
+
+build-intel:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_INTEL
+  stage: build
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_INTEL
+  script:
+    - source /software/intel/compilers_and_libraries/linux/bin/compilervars.sh -platform linux -arch intel64
+    - conan remote remove gitlab
+    - conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan
+    - cd $DOCKER_GIT_DIR_INTEL
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen
+    - make elpaso-intel
+    - make elpaso-build
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+buildlib-intel:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_INTEL
+  stage: build
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_INTEL
+  script:
+    - source /software/intel/compilers_and_libraries/linux/bin/compilervars.sh -platform linux -arch intel64
+    - conan remote remove gitlab
+    - conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan
+    - cd $DOCKER_GIT_DIR_INTEL
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-lib
+    - make elpaso-intel
+    - make elpasolib-build
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+tests-unit-intel:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_INTEL
+  stage: tests
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_INTEL
+  script:
+    - source /software/intel/compilers_and_libraries/linux/bin/compilervars.sh -platform linux -arch intel64
+    - conan remote remove gitlab
+    - conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan
+    - cd $DOCKER_GIT_DIR_INTEL
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-ci
+    - make elpaso-intel
+    - make elpaso-build
+    - $DOCKER_GIT_DIR_INTEL/bin/elpasoT --gtest_output="xml:report.xml"
+    - cd $DOCKER_GIT_DIR_INTEL/project/elpasoCore/elpasoT
+    - echo -e "source\n~test\nbasics\n~3rdParty" > myComp.txt
+    - profmerge
+    - codecov -comp myComp.txt -txtlcov
+    - python3 -m pip install automate --extra-index-url https://git.rz.tu-bs.de/api/v4/projects/3038/packages/pypi/simple
+    - python3 -m automate -displayIntelCodCovSummary 1 -f $DOCKER_GIT_DIR_INTEL/project/elpasoCore/elpasoT/CODE_COVERAGE.TXT
+    - codecov -comp myComp.txt
+  coverage: '/Coverage:\s+\d+\.\d+/'
+  tags:
+    - Ubuntu
+    - DockerExecutor
+  artifacts:
+    when: always
+    name: tests_unit_report_intel
+    reports:
+      junit: report.xml
+
+tests-integration-intel:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_INTEL
+  stage: tests
+  timeout: 3 hours
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_INTEL
+  script:
+    - source /software/intel/compilers_and_libraries/linux/bin/compilervars.sh -platform linux -arch intel64
+    - conan remote remove gitlab
+    - conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan
+    - cd $DOCKER_GIT_DIR_INTEL
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-ci
+    - make elpaso-intel
+    - make elpaso-build
+    - python3 -m pip install automate --extra-index-url https://git.rz.tu-bs.de/api/v4/projects/3038/packages/pypi/simple
+    - python3 -m automate -o ./output-intel -p $DOCKER_GIT_DIR_INTEL/bin/ -c intel -t corr -r -b https://cloud.tu-braunschweig.de/s/J5HypDZZBYz6tcs/download/benchmarks.zip -r -g https://git.rz.tu-bs.de/ -i 2591 
+    - cd $DOCKER_GIT_DIR_INTEL/project/elpasoCore/elpasoC
+    - echo -e "source\n~test\nbasics\n~3rdParty" > myComp.txt
+    - profmerge
+    - codecov -comp myComp.txt -txtlcov
+    - python3 -m automate -displayIntelCodCovSummary 1 -f $DOCKER_GIT_DIR_INTEL/project/elpasoCore/elpasoC/CODE_COVERAGE.TXT
+    - codecov -comp myComp.txt
+  coverage: '/Coverage:\s+\d+\.\d+/'
+  artifacts:
+    name: automate_integration_report_intel
+    when: always
+    paths:
+      - $DOCKER_GIT_DIR_INTEL/output-intel/outputs/reports/full_report.pdf
+      - $DOCKER_GIT_DIR_INTEL/project/elpasoCore/elpasoC/CODE_COVERAGE.HTML
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+# tests-performance-intel:
+#   image: $ELPASO_DOCKER_REGISTRY_IMG_INTEL
+#   stage: tests
+#   timeout: 3 hours
+#   variables:
+#     GIT_CLONE_PATH: $DOCKER_GIT_DIR_INTEL
+#   script:
+#     - source /software/intel/compilers_and_libraries/linux/bin/compilervars.sh -platform linux -arch intel64
+#     - conan remote remove gitlab
+#     - conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan
+#     - cd $DOCKER_GIT_DIR_INTEL
+#     - rm -rf project
+#     - mkdir project
+#     - make cmake-gen
+#     - make elpaso-intel
+#     - make elpaso-build
+#     - python3 -m pip install automate --extra-index-url https://git.rz.tu-bs.de/api/v4/projects/3038/packages/pypi/simple
+#     - python3 -m automate -o ./output-performance -p $DOCKER_GIT_DIR_INTEL/bin/ -c intel -t per -r -b https://cloud.tu-braunschweig.de/s/J5HypDZZBYz6tcs/download/benchmarks.zip -r -g https://git.rz.tu-bs.de/ -i 2591 -m /software/intel/impi/2019.6.166/intel64/bin/mpirun
+#   artifacts:
+#     name: automate_integration_report_intel
+#     when: always
+#     paths:
+#       - $DOCKER_GIT_DIR_INTEL/output-performance/outputs/reports/full_report.pdf
+#   tags:
+#     - Ubuntu
+#     - DockerExecutor
+
+deploy-conan-intel:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_INTEL
+  stage: deploy
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_INTEL
+  script:
+    - source /software/intel/compilers_and_libraries/linux/bin/compilervars.sh -platform linux -arch intel64
+    - conan remote remove gitlab
+    - conan remote add gitlab https://git.rz.tu-bs.de/api/v4/projects/2591/packages/conan
+    - cd $DOCKER_GIT_DIR_INTEL
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-lib
+    - make elpaso-intel
+    - make elpasolib-build
+    - cd elpasoCore-intel
+    - conan export-pkg $DOCKER_GIT_DIR_INTEL/elpasoCore/conan/conan-elpasocore/conanfile-elpasocore-intel.py elpaso-core/23.01.1@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
+    - conan user ci-user -r gitlab -p $CI_CONAN_MANAGER
+    - conan upload elpaso-core/23.01.1@ina+elpaso/stable --all -r gitlab
+  tags:
+    - Ubuntu
+    - DockerExecutor
+  only:
+    refs:
+      - tags
+      - master

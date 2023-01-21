@@ -1,0 +1,183 @@
+# YAML script for the CI/CD execution for elPaSo gnu build
+#
+# Author: Harikrishnan Sreekumar, Institute for Acoustics, TU Braunschweig, Germany
+
+# elPaSo CI/CD stages
+
+build-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: build
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen
+    - make elpaso-gnu
+    - make elpaso-build
+  tags:
+    - Ubuntu
+    - DockerExecutor
+    
+buildlib-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: build
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-lib
+    - make elpaso-gnu
+    - make elpasolib-build
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+tests-unit-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: tests
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-ci
+    - make elpaso-gnu
+    - make elpaso-build
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DOCKER_GIT_DIR_GNU/bin/lib
+    - export OPAL_PREFIX=$DOCKER_GIT_DIR_GNU/bin/
+    - $DOCKER_GIT_DIR_GNU/bin/elpasoT --gtest_output="xml:report.xml"
+    - lcov --capture --directory . --output-file coverage.info
+    - lcov --remove coverage.info -o coverage_filtered.info '/usr/include/*' '*conan*' '*test*' '*3rdParty*'
+  coverage: '/lines......: \d+.\d+/'
+  tags:
+    - Ubuntu
+    - DockerExecutor
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+
+tests-integration-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: tests
+  timeout: 3 hours
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-ci
+    - make elpaso-gnu
+    - make elpaso-build
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DOCKER_GIT_DIR_GNU/bin/lib
+    - export OPAL_PREFIX=$DOCKER_GIT_DIR_GNU/bin/
+    - python3 -m pip install automate --extra-index-url https://git.rz.tu-bs.de/api/v4/projects/3038/packages/pypi/simple
+    - python3 -m automate -o ./output-gnu -p $DOCKER_GIT_DIR_GNU/bin/ -c gnu -t corr -r -b https://cloud.tu-braunschweig.de/s/J5HypDZZBYz6tcs/download/benchmarks.zip -r -g https://git.rz.tu-bs.de/ -i 2591 
+    - lcov --capture --directory . --output-file coverage.info
+    - lcov --remove coverage.info -o coverage_filtered.info '/usr/include/*' '*conan*' '*test*' '*3rdParty*'
+  coverage: '/lines......: \d+.\d+/'
+  artifacts:
+    name: automate_integration_report_gnu
+    when: always
+    paths:
+      - $DOCKER_GIT_DIR_GNU/output-gnu/outputs/reports/full_report.pdf
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+tests-performance-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: tests
+  timeout: 3 hours
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen
+    - make elpaso-gnu
+    - make elpaso-build
+    - export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$DOCKER_GIT_DIR_GNU/bin/lib
+    - export OPAL_PREFIX=$DOCKER_GIT_DIR_GNU/bin/
+    - python3 -m pip install automate --extra-index-url https://git.rz.tu-bs.de/api/v4/projects/3038/packages/pypi/simple
+    - python3 -m automate -o ./output-performance -p $DOCKER_GIT_DIR_GNU/bin/ -c gnu -t per -r -b https://cloud.tu-braunschweig.de/s/J5HypDZZBYz6tcs/download/benchmarks.zip -r -g https://git.rz.tu-bs.de/ -i 2591 -m $DOCKER_GIT_DIR_GNU/bin/bin/mpirun
+  artifacts:
+    name: automate_performance_gnu_report
+    when: always
+    paths:
+      - $DOCKER_GIT_DIR_GNU/output-performance/outputs/reports/full_report.pdf
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+tests-lint-clang-tidy-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: tests
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-lint
+    - make elpaso-gnu
+    - make elpaso-build
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+deploy-docker-gnu:
+  stage: deploy
+  image: docker:20.10
+  timeout: 3 hours
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  services:
+    - docker:dind
+  script:
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - cp -r $DOCKER_GIT_DIR_GNU/docker/release-gnu /builds
+    - cd /builds/release-gnu
+    - rm -rf elPaSo-Core
+    - mkdir elPaSo-Core
+    - cp -r $DOCKER_GIT_DIR_GNU/* ./elPaSo-Core/
+    - docker build . -t $ELPASO_DOCKER_IMG_GNU
+    - docker push $ELPASO_DOCKER_IMG_GNU
+  tags:
+    - Ubuntu
+    - DockerExecutor
+  only:
+    refs:
+      - tags
+      - master
+
+deploy-conan-gnu:
+  image: $ELPASO_DOCKER_REGISTRY_IMG_GNU
+  stage: deploy
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU
+    - rm -rf project
+    - mkdir project
+    - make cmake-gen-lib
+    - make elpaso-gnu
+    - make elpasolib-build
+    - cd elpasoCore-gnu
+    - conan export-pkg $DOCKER_GIT_DIR_GNU/elpasoCore/conan/conan-elpasocore/conanfile-elpasocore-gnu.py elpaso-core/23.01.1@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
+    - conan user ci-user -r gitlab -p $CI_CONAN_MANAGER
+    - conan upload elpaso-core/23.01.1@ina+elpaso/stable --all -r gitlab
+  tags:
+    - Ubuntu
+    - DockerExecutor
+  only:
+    refs:
+      - tags
+      - master

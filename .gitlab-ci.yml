@@ -1,0 +1,61 @@
+# YAML script for the CI/CD execution for elPaSo
+#
+# Author: Harikrishnan Sreekumar, Institute for Acoustics, TU Braunschweig, Germany
+
+# elPaSo CI/CD stages
+
+stages:
+ - build
+ - tests
+ - documentation
+ - deploy
+
+variables:
+  ELPASO_DOCKER_REGISTRY_IMG_GNU: "git.rz.tu-bs.de:4567/akustik/elpaso-core/elpasocore-baseimage-ubuntu-x64:23.01.1"
+  ELPASO_DOCKER_REGISTRY_IMG_INTEL: "localhost:5000/elpaso-intel-ubuntu-x64:22.12.1"
+  ELPASO_DOCKER_IMG_GNU: "git.rz.tu-bs.de:4567/akustik/elpaso-core/elpasocore:latest"
+  DOCKER_GIT_DIR_GNU: /builds/elPaSo/gnu/
+  DOCKER_GIT_DIR_INTEL: /builds/elPaSo/intel/
+
+# include projects
+include:
+ - .gitlab-ci-pipeline-gnu.yml
+ - .gitlab-ci-pipeline-intel.yml
+
+docu-manual:
+  image: git.rz.tu-bs.de:4567/akustik/elpaso-core/tubslatex-elpaso-ci:23.01.1
+  stage: documentation
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU/doc/manual
+    - make all
+    - mv elpasoCore-Manual.pdf $DOCKER_GIT_DIR_GNU
+  artifacts:
+    name: elpasoCore_docs_Manual
+    when: always
+    paths:
+      - elpasoCore-Manual.pdf
+  tags:
+    - Ubuntu
+    - DockerExecutor
+
+docu-doxygen:
+  image: git.rz.tu-bs.de:4567/akustik/elpaso-core/tubslatex-elpaso-ci:23.01.1
+  stage: documentation
+  variables:
+    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  script:
+    - cd $DOCKER_GIT_DIR_GNU/doc/doxygen
+    - doxygen Doxyfile
+    - cd doxyout/latex
+    - make
+    - mv refman.pdf $DOCKER_GIT_DIR_GNU/elpasoCore-docu-doxygen.pdf
+  artifacts:
+    name: elpasoCore_docs_Doxygen
+    when: always
+    paths:
+      - elpasoCore-docu-doxygen.pdf
+  tags:
+    - Ubuntu
+    - DockerExecutor
