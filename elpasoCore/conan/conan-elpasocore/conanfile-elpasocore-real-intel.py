@@ -2,7 +2,7 @@ from conans import ConanFile, CMake, tools
 
 
 class elpasoCoreConan(ConanFile):
-    name = "elpaso-core"
+    name = "elpasocore-real"
     version = "23.01.1"
     license = "All rights reserved"
     author = "Harikrishnan Sreekumar"
@@ -24,11 +24,11 @@ class elpasoCoreConan(ConanFile):
         pass
 
     def package(self):
-        self.copy("*.h", dst="include", keep_path=True)
-        self.copy("*.so", dst="lib", keep_path=True)
-        self.copy("*.so.*", dst="lib", keep_path=True)
+        self.copy("*.h", src="include", dst="include", keep_path=True)
+        self.copy("*.so", src="lib", dst="lib", keep_path=True)
+        self.copy("*.so.*", src="lib", dst="lib", keep_path=True)
 
     def package_info(self):
-        self.cpp_info.libs = ["libelpasoCore-gnu-cxx-complex-o.so", "libelpasoCore-gnu-cxx-o"]
+        self.cpp_info.libs = ["libelpasoCore-intel-cxx-o.so"]
         pass
 

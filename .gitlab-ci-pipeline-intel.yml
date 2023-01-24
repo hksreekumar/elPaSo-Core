@@ -153,9 +153,11 @@ deploy-conan-intel:
     - make elpaso-intel
     - make elpasolib-build
     - cd elpasoCore-intel
-    - conan export-pkg $DOCKER_GIT_DIR_INTEL/elpasoCore/conan/conan-elpasocore/conanfile-elpasocore-intel.py elpaso-core/23.01.1@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
+    - conan export-pkg $DOCKER_GIT_DIR_INTEL/elpasoCore/conan/conan-elpasocore/conanfile-elpasocore-real-intel.py elpasocore-real/23.01.1@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
+    - conan export-pkg $DOCKER_GIT_DIR_INTEL/elpasoCore/conan/conan-elpasocore/conanfile-elpasocore-complex-intel.py elpasocore-complex/23.01.1@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
     - conan user ci-user -r gitlab -p $CI_CONAN_MANAGER
-    - conan upload elpaso-core/23.01.1@ina+elpaso/stable --all -r gitlab
+    - conan upload elpasocore-real/23.01.1@ina+elpaso/stable --all -r gitlab
+    - conan upload elpasocore-complex/23.01.1@ina+elpaso/stable --all -r gitlab
   tags:
     - Ubuntu
     - DockerExecutor
