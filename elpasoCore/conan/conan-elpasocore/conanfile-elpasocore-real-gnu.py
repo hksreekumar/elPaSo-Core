@@ -25,10 +25,9 @@ class elpasoCoreConan(ConanFile):
 
     def package(self):
         self.copy("*.h", src="include", dst="include", keep_path=True)
-        self.copy("*.so", src="lib", dst="lib", keep_path=True)
-        self.copy("*.so.*", src="lib", dst="lib", keep_path=True)
+        self.copy("libelpasoCore-cxx-o.so", src="lib", dst="lib", keep_path=True)
 
     def package_info(self):
-        self.cpp_info.libs = ["libelpasoCore-gnu-cxx-o.so"]
+        self.cpp_info.libs = ["libelpasoCore-cxx-o.so"]
         pass
 

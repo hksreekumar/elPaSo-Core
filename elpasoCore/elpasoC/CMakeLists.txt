@@ -11,7 +11,7 @@
 MESSAGE("> Building elPaSo complex module: elpasoC")
 
 SET(ELPASO_EXEC_NAME "elpasoC")
-SET(ELPASO_DLIB_NAME "elpasoCore-${PETSC_ARCH_COMPLEX}")
+SET(ELPASO_DLIB_NAME "elpasoCore-cxx-complex-o")
 
 cmake_minimum_required(VERSION 3.8)
 IF(NOT GEN_DLIB)
