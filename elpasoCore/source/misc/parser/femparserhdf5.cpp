@@ -580,4 +580,6 @@ ParserNCInterfaceElementsData cFemParserHDF5::getNCInterfaceElementsData(int _id
     // Number of nodes
     readData.nnod_NF = cInputSingletonH5::getInstance()->readIntegerAttributeFromDataset(nRulesHDF5::m_cNCInterElems_dInterfaceElements_sNfluidNodes, nRulesHDF5::m_cNCInterElems, ielem_dataset);
     readData.nnod_NS = cInputSingletonH5::getInstance()->readIntegerAttributeFromDataset(nRulesHDF5::m_cNCInterElems_dInterfaceElements_sNstructNodes, nRulesHDF5::m_cNCInterElems, ielem_dataset);
+
+    return readData;
 }

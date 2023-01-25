@@ -41,6 +41,6 @@ class cElementFactory {
   //! @author Harikrishnan Sreekumar
   //! @param _elementType Element type string
   //! @date 06.12.2022
-  cElementFEM* createElement(std::string _elementType);
+  virtual cElementFEM* createElement(std::string _elementType);
 };
 #endif

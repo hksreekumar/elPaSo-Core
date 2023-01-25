@@ -41,6 +41,6 @@ class cFemParserFactory {
   //! @brief Function to create the parser entity
   //! @author Harikrishnan Sreekumar
   //! @date 06.12.2022
-  cFemParserInterface* createParser(std::string _fileExtension);
+  virtual cFemParserInterface* createParser(std::string _fileExtension);
 };
 #endif
