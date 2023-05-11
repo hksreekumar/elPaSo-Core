@@ -152,7 +152,7 @@ ELSE()
 ENDIF()
 	
 # ---- Set flag for coverage tests ----------------------------------------#
-IF(LINK_COV OR LINK_ELPASOT)
+IF(LINK_COV)
 	IF(ELPASO_COMPILER_INTEL)
 		SET(INTEL_COVERAGE_LINK_FLAGS    "-prof-gen=srcpos")
 		SET(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${INTEL_COVERAGE_LINK_FLAGS}")

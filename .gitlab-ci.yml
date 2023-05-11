@@ -16,6 +16,7 @@ variables:
   ELPASO_DOCKER_IMG_GNU: "git.rz.tu-bs.de:4567/akustik/elpaso-core/elpasocore:latest"
   DOCKER_GIT_DIR_GNU: /builds/elPaSo/gnu/
   DOCKER_GIT_DIR_INTEL: /builds/elPaSo/intel/
+  ELPASO_VERSION: 23.05.1
 
 # include projects
 include:

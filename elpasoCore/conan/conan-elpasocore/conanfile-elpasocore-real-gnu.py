@@ -3,7 +3,7 @@ from conans import ConanFile, CMake, tools
 
 class elpasoCoreConan(ConanFile):
     name = "elpasocore-real"
-    version = "23.01.1"
+    version = "23.05.1"
     license = "All rights reserved"
     author = "Harikrishnan Sreekumar"
     url = "https://www.tu-braunschweig.de/en/ina/institute/ina-tech/research-code-elpaso"

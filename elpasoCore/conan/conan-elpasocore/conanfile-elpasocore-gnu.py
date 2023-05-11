@@ -2,17 +2,16 @@ from conans import ConanFile, CMake, tools
 
 
 class elpasoCoreConan(ConanFile):
-    name = "elpasocore-real"
+    name = "elpasocore"
     version = "23.05.1"
     license = "All rights reserved"
     author = "Harikrishnan Sreekumar"
     url = "https://www.tu-braunschweig.de/en/ina/institute/ina-tech/research-code-elpaso"
-    description = "Lib assist for elPaSo build"
+    description = "Prebuilt elpaso-core"
     topics = ("<Put some tag here>", "<here>", "<and here>")
     settings = "os", "compiler", "build_type", "arch"
     options = {"shared": [True, False], "fPIC": [True, False]}
     default_options = {"shared": False, "fPIC": True}
-    generators = "cmake_find_package"
 
     def config_options(self):
         pass
@@ -24,10 +23,11 @@ class elpasoCoreConan(ConanFile):
         pass
 
     def package(self):
+        self.copy("elpaso*", src=".", dst=".", keep_path=True)
         self.copy("*.h", src="include", dst="include", keep_path=True)
-        self.copy("*libelpasoCore-cxx-o.so", src="lib", dst="lib", keep_path=True)
+        self.copy("**", src="bin", dst="bin", keep_path=True)
+        self.copy("*", src="lib", dst="lib", keep_path=True)
+        self.copy("*", src="share", dst="share", keep_path=True)
 
     def package_info(self):
-        self.cpp_info.libs = ["libelpasoCore-cxx-o.so"]
         pass
-
