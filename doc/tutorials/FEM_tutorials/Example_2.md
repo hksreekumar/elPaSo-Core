@@ -107,7 +107,7 @@ python3 <path_to_preprocessor_codes>/main.py
   * Nodeset 3: 'SpringBCy'
 * Furthermore, the frequency range of the analysis has to be defined as shown in the picture below
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/Analysis_settings.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/Analysis_settings.PNG)
 
 
 ##### External loads
@@ -116,13 +116,13 @@ python3 <path_to_preprocessor_codes>/main.py
 ##### Material
 * The material setting for the plate is similar to this of the [previous example](Ex_1_Mat).
 * Next to the material of the plate, two materials have to be created for the springs:
-  * The material can be chosen under 'Material Type' (STRUCT linear spring) and added to the model by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.png) next to 'Material Type' (for further information on material types please refer to the different [material types](Material_types)).
-  * Furthermore, the material can be named (here, Spring_x and Spring_y) as well as defined by its different properties by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_2.png) next to 'Spring_x' and 'Spring_y'. Here, the torsional stiffness has to be defined as given in the table for 'Spring_x' as 'Crx = 1000' and 'Spring_y' as 'Cry = 1000'.
+  * The material can be chosen under 'Material Type' (STRUCT linear spring) and added to the model by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.PNG) next to 'Material Type' (for further information on material types please refer to the different [material types](Material_types)).
+  * Furthermore, the material can be named (here, Spring_x and Spring_y) as well as defined by its different properties by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_2.PNG) next to 'Spring_x' and 'Spring_y'. Here, the torsional stiffness has to be defined as given in the table for 'Spring_x' as 'Crx = 1000' and 'Spring_y' as 'Cry = 1000'.
 * Since different materials exist for the material and the boundary conditions in x- and y-direction, the three materials will be assigned with the numbers 1 to 3. Afterwards, the nodesets need to be assigned with the respective materials types (see in the figure below).
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/Material_1.png) 
+![](../../images/Tutorials/FEM_Tutorials/Example_2/Material_1.PNG) 
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/Material_2.png) 
+![](../../images/Tutorials/FEM_Tutorials/Example_2/Material_2.PNG) 
 
 
 ##### Boundary Conditions (BCs)
@@ -155,7 +155,7 @@ Please load the initial *.hdf5 file, not the eGenOutput_<filename>.*hdf5 file!
 ```
 * Finally, the user may want to compute the frequency response function for the mean squared velocity by clicking on 'Solution' > right click on 'displacement' > 'Mean Squared Velocity' > tick 'Block 1' > 'OK'
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/Post_Processor.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/Post_Processor.PNG)
 
 
 ##### Mean squared Velocity 

@@ -127,35 +127,35 @@ python3 <path_to_preprocessor_codes>/main.py
 * The user needs to select the elPaSo-specific Element type 'DSG4' in 'Element type'.
 * Furthermore, the frequency range of the analysis has to be defined as shown in the picture below.
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/Analysis_settings.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/Analysis_settings.PNG)
 
 (Ex_1_Ext_F)=
 ##### External loads
 * A Force F = 1N in the z-direction (remember that the geometry is in z-plane) is to be applied at the required node. Keep in mind that you can only define loads that act on nodes!
 * The nodeset for the external load was already defined in Cubit Coreform as 'Nodeset 2'
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/External_load.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/External_load.PNG)
 
 * After creating the external load, the load vector can be displayed by checking on 'Draw'
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/External_load_drawn.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/External_load_drawn.PNG)
 
 (Ex_1_Mat)=
 ##### Material
-* The material can be chosen under 'Material Type' (STRUCT linear elastic iso) and added to the model by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.png) next to 'Material Type' (for further information on material types please refer to the different [material types](Material_types))
-* Furthermore, the material can be named (here, Aluminium) as well as defined by its different properties by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_2.png) next to 'Aluminium'
+* The material can be chosen under 'Material Type' (STRUCT linear elastic iso) and added to the model by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.PNG) next to 'Material Type' (for further information on material types please refer to the different [material types](Material_types))
+* Furthermore, the material can be named (here, Aluminium) as well as defined by its different properties by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_2.PNG) next to 'Aluminium'
 ```{warning} 
 Also the plate's thickness has to be set in 'Edit Material' (here: 0.003)
 ```
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/Material.png) 
+![](../../images/Tutorials/FEM_Tutorials/Example_1/Material.PNG) 
 
 (Ex_1_BCs)=
 ##### Boundary Conditions (BCs)
-* Finally, the boundary conditions will be set in 'Constraints' by choosing 'BC | Structure | Fieldvalue' and clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.png)
+* Finally, the boundary conditions will be set in 'Constraints' by choosing 'BC | Structure | Fieldvalue' and clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.PNG)
 * Next to this, the constraints have to be set in 'Edit constraint': Here, a simply supported plate is assumed, so that only the translatoric degree of freedom in z-direction is blocked (tick 'u3') (for further information about the elements degrees of freedom please refer to the [element library](Element_library))
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/BC.png) 
+![](../../images/Tutorials/FEM_Tutorials/Example_1/BC.PNG) 
 
 ##### Export as *.hdf5 file
 * The export as an *.hdf5 file is realised by clicking on 'Save and Exit'
@@ -186,7 +186,7 @@ Please load the initial *.hdf5 file, not the eGenOutput_<filename>.*hdf5 file!
 ```
 * Finally, the user may want to compute the frequency response function for the mean squared velocity by clicking on 'Solution' > right click on 'displacement' > 'Mean Squared Velocity' > tick 'Block 1' > 'OK'
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/Post_Processor.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/Post_Processor.PNG)
 
 (Ex_1_DSG_comp)=
 #### Comparison between modeling with DSG4 and DSG9 elements
