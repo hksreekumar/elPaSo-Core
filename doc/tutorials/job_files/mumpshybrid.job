@@ -1,0 +1,24 @@
+#!/bin/bash -l 
+
+#SBATCH --partition=shortrun_small
+#SBATCH --nodes=4
+#SBATCH --time=03:00:00
+#SBATCH --ntasks-per-node=20
+#SBATCH --job-name=mumps_hybrid
+
+export OMP_NUM_THREADS=10
+
+module purge all
+module load intel-studio-2020
+source /cluster/share/intelenv.sh
+
+export VERBOSE=noverbose
+export KMP_AFFINITY=$VERBOSE, granularity=thread,compact,1,0
+export I_MPI_PIN_DOMAIN=socket 
+
+working_dir=<FILL_YOUR_WORKINGDIRECTORY>
+cd $working_dir
+sacct --jobs=${SLURM_JOB_ID} --format="CPUTime, MaxRSS,JobID"
+/cluster/intel/intel2020/compilers_and_libraries_2020.0.166/linux/mpi/intel64/bin/mpirun -np 8 -ppn 2 -print-rank-map <FILL_ELPASO_PATH>/elpasoC -c -inp <FILL_MODELNAME>.hdf5 -solver 1 -mat_mumps_icntl_4 2 -memory_view
+wait
+sacct --jobs=${SLURM_JOB_ID} --format="CPUTime, MaxRSS,JobID"

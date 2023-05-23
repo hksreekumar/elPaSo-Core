@@ -1,4 +1,0 @@
-{
-    "image": "tubslatex",
-    "extensions": ["mathematic.vscode-latex","james-yu.latex-workshop","vomout.latex-syntax","sandcastle.vscode-open"]
-}

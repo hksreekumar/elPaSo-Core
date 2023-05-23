@@ -1,0 +1,12 @@
+#!/bin/bash -l
+
+#SBATCH --partition=shortrun_small
+#SBATCH --nodes=1
+#SBATCH --time=03:00:00
+#SBATCH --job-name=testing
+#SBATCH --ntasks-per-node=20
+
+
+working_dir=~
+cd $working_dir
+sleep 1h 

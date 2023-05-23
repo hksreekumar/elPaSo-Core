@@ -1,0 +1,48 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: main/intro
+parts:
+  - caption: User Documentations 📖
+    chapters:
+    - file: tutorials/getting_started
+      sections:
+      - file: tutorials/installation/installation
+        sections:
+        - file: tutorials/installation/install_executable
+        - file: tutorials/installation/install_docker
+        - file: tutorials/installation/install_library
+      - file: tutorials/running
+      - file: tutorials/running_parametric
+    - file: theory/utility
+      sections:
+      - file: theory/feature_overview
+      - file: theory/fem_utility/fem_utility
+        sections:
+        - file: theory/fem_utility/element_library
+        - file: theory/fem_utility/material_library
+      - file: theory/bem_utility/bem_utility
+      - file: theory/sbfem_utility/sbfem_utility
+      - file: theory/mor_utility/mor_utility
+      - file: theory/hpc_utility/hpc_utility
+      - file: tutorials/tutorials
+        sections:
+        - file: tutorials/FEM_tutorials/Example_1
+        - file: tutorials/FEM_tutorials/Example_2
+  - caption: Developer Documentations 💻
+    chapters:
+    - file: technical/technical
+      sections:  
+      - file: technical/contributing
+      - file: technical/devsetup.md
+      - file: technical/sustainability/maintainance/maintaining.md
+        sections:
+        - file: technical/sustainability/maintainance/maintaining_libraries.md
+        - file: technical/sustainability/maintainance/maintaining_ci.md
+        - file: technical/sustainability/maintainance/maintaining_containerregistry.md
+        - file: technical/sustainability/maintainance/maintaining_conanregistry.md
+        - file: technical/sustainability/maintainance/maintaining_docs.md
+          sections:
+          - file: md_cheatsheet
+    - file: technical/sustainability/citability.md

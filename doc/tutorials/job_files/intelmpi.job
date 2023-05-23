@@ -1,0 +1,15 @@
+#!/bin/bash -l 
+
+#SBATCH --partition=shortrun_small
+#SBATCH --nodes=1
+#SBATCH --time=03:00:00
+#SBATCH --job-name=example_job
+
+module purge all
+module load intel-studio-2020
+source /cluster/share/intelenv.sh
+
+working_dir=<FILL_YOUR_WORKINGDIRECTORY>
+cd $working_dir
+/cluster/intel/intel2020/compilers_and_libraries_2020.0.166/linux/mpi/intel64/bin/mpirun -n 20 <FILL_ELPASO_PATH>/elpasoC -c -inp <FILL_MODELNAME>.hdf5
+wait

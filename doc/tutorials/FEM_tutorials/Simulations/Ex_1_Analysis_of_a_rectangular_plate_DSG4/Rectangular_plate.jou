@@ -1,0 +1,25 @@
+#Creating geometry
+create surface rectangle width 0.9 height 0.6 zplane
+
+#Move geometry to origin
+move surface 1 x 0.45 y 0.3 z 0
+
+#Create nodes
+surface 1 size 0.1
+
+#Meshing
+mesh surface 1
+
+#Blocks
+block 1 add face all
+
+#Assing element type
+block 1 element type SHELL4
+
+#Nodesets
+nodeset 1 add node in curve all
+nodeset 2 add node 70
+
+
+
+

@@ -24,22 +24,27 @@ include:
  - .gitlab-ci-pipeline-intel.yml
 
 docu-manual:
-  image: git.rz.tu-bs.de:4567/akustik/elpaso-core/tubslatex-elpaso-ci:23.01.1
   stage: documentation
-  variables:
-    GIT_CLONE_PATH: $DOCKER_GIT_DIR_GNU
+  image: python:3.10-slim
   script:
-    - cd $DOCKER_GIT_DIR_GNU/doc/manual
-    - make all
-    - mv elpasoCore-Manual.pdf $DOCKER_GIT_DIR_GNU
+    - pip install -U jupyter-book
+    - cd doc
+    - jupyter-book clean .
+    - jupyter-book build .
   artifacts:
-    name: elpasoCore_docs_Manual
-    when: always
     paths:
-      - elpasoCore-Manual.pdf
-  tags:
-    - Ubuntu
-    - DockerExecutor
+      - doc/_build/
+
+pages:
+  stage: deploy
+  image: busybox:latest
+  script:
+    - mv doc/_build/html public
+  artifacts:
+    paths:
+      - public
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
 
 docu-doxygen:
   image: git.rz.tu-bs.de:4567/akustik/elpaso-core/tubslatex-elpaso-ci:23.01.1
