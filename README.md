@@ -23,7 +23,7 @@ The code is permanently improved. Cooperation with new partners for further chal
 ## Documentations
 Various documentations are available for using/developing elPaSo.
      Doxygen report                  : ./doc/doxygen
-     Manual                          : ./doc/manual
+     Manual                          : https://akustik.gitlab-pages.rz.tu-bs.de/elPaSo-Core
 
 ## Usage
 
