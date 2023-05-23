@@ -8,7 +8,7 @@
 The objective of this tutorial is to model a simply supported plate made of aluminium (a linear elastic isotropic material), as shown in the figure below, and model its response in frequency domain when excited by a single point force with the data given in the table below. Also to visualize the results and save the FRF (frequency response function) for the mean squared velocity. 
 
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/problem1.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/problem1.PNG)
 
 
 |    Parameter          |   Symbol      |  Value                |
@@ -43,7 +43,7 @@ Pre-processing includes all the procedures before Solving. The following section
 
 #### Pre-Processing with Cubit Coreform and elPaSo Pre-Processor
 This section explains the use of Cubit Coreform and elPaSo Pre-Processor commands required for the pre-Processing routine. The geometry will be setup within Cubit Coreform, while loads, boundary conditions and material parameters will be defined within the elPaSo Pre-Processor. \
-The geometry generation in Cubit Coreform can be done in two ways, first is to go by the interface, second is to write a Journal Script in ![](../../images/Tutorials/Cubit_icons/journaleditor.png) (or Tools > Journal Editor) and run it at once. The scripting interface is recommended for complex geometries. Both the methods are described in detail in the following sections. \
+The geometry generation in Cubit Coreform can be done in two ways, first is to go by the interface, second is to write a Journal Script in ![](../../images/Tutorials/Cubit_icons/journaleditor.PNG) (or Tools > Journal Editor) and run it at once. The scripting interface is recommended for complex geometries. Both the methods are described in detail in the following sections. \
 The Pre-Processing routine can be subdivided into following section: 
   * Modeling of Geometry (in Coreform Cubit)
   * Meshing (in Coreform Cubit)
@@ -56,13 +56,13 @@ The Pre-Processing routine can be subdivided into following section:
 Before starting, the working directory has to be set! \
 **Follow: Menu Bar > File > Set Directory > <directory_name>** 
 ```
-  * A plate with dimensions $a \times b$ can be created by clicking in the Command Panel on ![](../../images/Tutorials/Cubit_icons/geometry.png) (Geometry) > ![](../../images/Tutorials/Cubit_icons/create_geometry.png) (Create Geometry) > ![](../../images/Tutorials/Cubit_icons/create_surface.png) (Create Surface) > ![](../../images/Tutorials/Cubit_icons/rectangle.png) (Rectangle) > Setting 'Width' (0.9) and 'Height' (0.6) > Specify x-/y-/z-plane (z-plane) > Apply. 
+  * A plate with dimensions $a \times b$ can be created by clicking in the Command Panel on ![](../../images/Tutorials/Cubit_icons/geometry.PNG) (Geometry) > ![](../../images/Tutorials/Cubit_icons/create_geometry.PNG) (Create Geometry) > ![](../../images/Tutorials/Cubit_icons/create_surface.PNG) (Create Surface) > ![](../../images/Tutorials/Cubit_icons/rectangle.PNG) (Rectangle) > Setting 'Width' (0.9) and 'Height' (0.6) > Specify x-/y-/z-plane (z-plane) > Apply. 
   `````{admonition} Journal Script
   :class: tip
   <tt>#Creating geometry\
   create surface rectangle width 0.9 height 0.6 zplane</tt> 
   `````
-  * The user may now move the geometry to set the origin at a defined location by clicking on ![](../../images/Tutorials/Cubit_icons/geometry.png) (Geometry) > ![](../../images/Tutorials/Cubit_icons/Transform_geometry.png) (Transform Geometry) > ![](../../images/Tutorials/Cubit_icons/create_surface.png) (Transform surfaces) > ![](../../images/Tutorials/Cubit_icons/Move.png) (Select 'Move') > Defining 'Surface ID(s)' (1) > Select methods: 'Distance' > Define 'X Distance' (0.45), 'Y Distance' (0.3), 'Z Distance' (0) > Apply.
+  * The user may now move the geometry to set the origin at a defined location by clicking on ![](../../images/Tutorials/Cubit_icons/geometry.PNG) (Geometry) > ![](../../images/Tutorials/Cubit_icons/Transform_geometry.PNG) (Transform Geometry) > ![](../../images/Tutorials/Cubit_icons/create_surface.PNG) (Transform surfaces) > ![](../../images/Tutorials/Cubit_icons/Move.PNG) (Select 'Move') > Defining 'Surface ID(s)' (1) > Select methods: 'Distance' > Define 'X Distance' (0.45), 'Y Distance' (0.3), 'Z Distance' (0) > Apply.
   `````{admonition} Journal Script
   :class: tip
   <tt>#Move geometry to origin\
@@ -70,7 +70,7 @@ Before starting, the working directory has to be set! \
   `````
 
 ##### Meshing
-* During meshing, the surface is equipped with nodes and elements. This will be realized in the Command Panel by clicking on ![](../../images/Tutorials/Cubit_icons/mesh.png) (Mesh) > ![](../../images/Tutorials/Cubit_icons/Surfaces.png) (Surfaces) > ![](../../images/Tutorials/Cubit_icons/Define_interval_and_sizes.png) (Define intervals and sizes) > ![](../../images/Tutorials/Cubit_icons/Approximate_size.png) (Approximate size) > 'Select surfaces' (1) > 'Approximate size' (0.1) > Apply Size. \
+* During meshing, the surface is equipped with nodes and elements. This will be realized in the Command Panel by clicking on ![](../../images/Tutorials/Cubit_icons/mesh.PNG) (Mesh) > ![](../../images/Tutorials/Cubit_icons/Surfaces.PNG) (Surfaces) > ![](../../images/Tutorials/Cubit_icons/Define_interval_and_sizes.PNG) (Define intervals and sizes) > ![](../../images/Tutorials/Cubit_icons/Approximate_size.PNG) (Approximate size) > 'Select surfaces' (1) > 'Approximate size' (0.1) > Apply Size. \
 Afterwards, the user can mesh the surface by clicking on 'Mesh'.
 ```{warning} 
 Choose the mesh size in a way that there is at least 6 nodes per bending wavelength.
@@ -82,13 +82,13 @@ surface 1 size 0.1 \
 mesh surface 1</tt>
 `````
 
-* To assign element types to the plate model, first, a block has to be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.png) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Blocks.png) (Blocks) > ![](../../images/Tutorials/Cubit_icons/Create_material_blocks_and_beams.png) (Create material blocks and beams) > ![](../../images/Tutorials/Cubit_icons/Create_block.png) (Create block) > 'Block ID' (1) > 'Select' (Face) > 'ID(s)' (all) > Apply
+* To assign element types to the plate model, first, a block has to be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.PNG) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Blocks.PNG) (Blocks) > ![](../../images/Tutorials/Cubit_icons/Create_material_blocks_and_beams.PNG) (Create material blocks and beams) > ![](../../images/Tutorials/Cubit_icons/Create_block.PNG) (Create block) > 'Block ID' (1) > 'Select' (Face) > 'ID(s)' (all) > Apply
 `````{admonition} Journal Script 
 :class: tip
 <tt>#Blocks \
 block 1 add face all</tt>
 `````
-* After defining the block, the element type can be defined by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.png) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Blocks.png) (Blocks) > ![](../../images/Tutorials/Cubit_icons/Assign_element_type_to_block.png) (Assign element type to block) > 'Block ID(s)' (1) > 'Select' (Surfaces) > 'Surfaces' (SHELL4) > Apply
+* After defining the block, the element type can be defined by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.PNG) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Blocks.PNG) (Blocks) > ![](../../images/Tutorials/Cubit_icons/Assign_element_type_to_block.PNG) (Assign element type to block) > 'Block ID(s)' (1) > 'Select' (Surfaces) > 'Surfaces' (SHELL4) > Apply
 `````{admonition} Journal Script 
 :class: tip
 <tt>#Assigning element type \
@@ -97,13 +97,13 @@ block 1 element type SHELL4</tt>
 
 ##### Create nodesets
 * In order to apply external forces and boundary conditions to the plate model in the elPaSo Pre-Processor, nodesets have to be created within Cubit Coreform. 
-* First, a nodeset for the boundary conditions will be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.png) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Nodesets.png) (Nodesets) > ![](../../images/Tutorials/Cubit_icons/Create_nodesets.png) (Create nodesets) > 'Nodeset ID' (1) > 'Select' (Curve) > 'ID(s)' (all) > 'Apply'
+* First, a nodeset for the boundary conditions will be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.PNG) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Nodesets.PNG) (Nodesets) > ![](../../images/Tutorials/Cubit_icons/Create_nodesets.PNG) (Create nodesets) > 'Nodeset ID' (1) > 'Select' (Curve) > 'ID(s)' (all) > 'Apply'
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/Nodeset_1.png) 
+![](../../images/Tutorials/FEM_Tutorials/Example_1/Nodeset_1.PNG) 
 
-* Second, a nodeset for the external load will be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.png) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Nodesets.png) (Nodesets) > ![](../../images/Tutorials/Cubit_icons/Create_nodesets.png) (Create nodesets) > 'Nodeset ID' (2) > 'Select' (Node) > 'ID(s)' (70) > 'Apply'
+* Second, a nodeset for the external load will be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.PNG) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Nodesets.PNG) (Nodesets) > ![](../../images/Tutorials/Cubit_icons/Create_nodesets.PNG) (Create nodesets) > 'Nodeset ID' (2) > 'Select' (Node) > 'ID(s)' (70) > 'Apply'
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/Nodeset_2.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/Nodeset_2.PNG)
 
 `````{admonition} Journal Script 
 :class: tip
@@ -197,9 +197,9 @@ The tutorial presented the computations by using DSG4 as element type. Following
 DSG9 elements provide more precise solutions than DSG4 elements!  DSG9 elements are currently only available in the elPaSo Research Module.
 `````
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG4.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG4.PNG)
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG9.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG9.PNG)
 
 ----
 ## Conclusion

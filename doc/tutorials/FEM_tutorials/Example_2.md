@@ -7,7 +7,7 @@
 ## Objective
 The aim of this example is to study the effects of stiffness boundary conditions on acoustic values of the rectangular plate from the previous example, as shown in the figure below. To do so, torsional springs are applied to each node of the boundary with some discrete stiffness. Acoustic values are calculated by use of the Rayleigh integral. The effects of the variation on the mean square velocity and radiated sound power are documented. The table below gives the needed data.
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/problem2.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/problem2.PNG)
 
 |    Parameter          |   Symbol      |  Value                |
 | :------------         | ------------- | :-------------        |
@@ -36,7 +36,7 @@ The second approach is more plausible with real life scenario as we hardly have 
 ### Pre-Processing 
 
 #### Pre-Processing with Cubit Coreform and elPaSo Pre-Processor
-For this example the modeling procedure in Cubit Coreform is shown only with Journal Script method, for the other approach to create geometry using physical interface please refer to the previous example. One can open the Journal Editor window by clicking onto ![](../../images/Tutorials/Cubit_icons/journaleditor.png) to write the script.
+For this example the modeling procedure in Cubit Coreform is shown only with Journal Script method, for the other approach to create geometry using physical interface please refer to the previous example. One can open the Journal Editor window by clicking onto ![](../../images/Tutorials/Cubit_icons/journaleditor.PNG) to write the script.
 
 #### Modeling of Geometry
 * Create the plate with dimensions $a \times b$ ($a=0.9$ and $b = 0.6$)
@@ -161,24 +161,24 @@ Please load the initial *.hdf5 file, not the eGenOutput_<filename>.*hdf5 file!
 ##### Mean squared Velocity 
 * Again, the solution is compared with respect to DSG4 and DSG9 elements. The same effects of DSG9 elements are observable as in the [previous example](Ex_1_DSG_comp).
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/FRF_DSG4.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/FRF_DSG4.PNG)
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/FRF_DSG9.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/FRF_DSG9.PNG)
 
 ###### Comparison to the rectangular plate without springs as BCs
 * Below, the FRF of the mean squared velocities - calculated with DSG4 and DSG9 elements - are shown with respect to the [previous example](Ex_1_DSG_comp). It is visible that the resonance peaks in the FRFs of the present example are shifted to higher frequencies, which is reasoned in the increased system stiffness due to the torsional springs at the boundary. 
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG4.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG4.PNG)
 
-![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG9.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_1/FRF_DSG9.PNG)
 
 ##### Radiated sound power
 * For the radiated sound power repeat the same procedure by clicking on 'Solution' > right click on 'displacement' > 'Radiated Sound Power' > tick 'Block 1' > 'OK'
 * It is visible that the maximum in the radiated sound power correlates with the maximum peaks of the mean squared velocity. Again, DSG4 and DSG9 elements are used for the computation of the FRFs.
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/Radiated_Sound_Power_DSG4.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/Radiated_Sound_Power_DSG4.PNG)
 
-![](../../images/Tutorials/FEM_Tutorials/Example_2/Radiated_Sound_Power_DSG9.png)
+![](../../images/Tutorials/FEM_Tutorials/Example_2/Radiated_Sound_Power_DSG9.PNG)
 ----
 
 ## Conclusion
