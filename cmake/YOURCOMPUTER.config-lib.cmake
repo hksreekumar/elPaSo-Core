@@ -18,8 +18,8 @@ MACRO(DEPENDENCY_CONFIG)
 	SET(INTEL_DIR			"/software/intel")
 
 	# ---- Set version (MPI is linked automatically) -----------------------#
-	SET(PETSC_VERSION		3.16.1)
-	SET(SLEPC_VERSION		3.16.0)
+	SET(PETSC_VERSION		3.19.1)
+	SET(SLEPC_VERSION		3.19.1)
 	SET(XMLIO_VERSION		0.92)
 	SET(HDF5_VERSION		1.12.0)
 	SET(OPENMPI_VERSION		3.1.6)

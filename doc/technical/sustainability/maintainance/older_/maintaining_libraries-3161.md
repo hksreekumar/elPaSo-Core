@@ -31,8 +31,8 @@ For intel compiled version, you require a licensed installation of Intel Paralle
 |    OS  |  Ubuntu 20.04.5 LTS |
 |    GNU/Intel compilers  |   (Stable: GNU 8)/(Intel parallel studio 2020) |
 |    cmake                |   (Stable: 3.14.0, Tested: 3.19.4) |
-|    PETSc                |   (Stable: 3.19.1) |
-|    SLEPc                |   (Stable: 3.19.1) |
+|    PETSc                |   (Stable: 3.16.1) |
+|    SLEPc                |   (Stable: 3.16.0) |
 |    ARPACK               |   (Stable: 2.1) |
 |    Intel MKL            |   (Stable: Intel parallel studio 2020) |
 |    HDF5                 |   (Stable: 1.12.0) |
@@ -51,30 +51,24 @@ export CPATH=/opt/elPaSo # installation directory for elpaso
 rm -rf $CPATH
 mkdir $CPATH
 
-
-##### COMMON VARIABLES
-# PETSc
-export PETSC_V=3.19.1
-export PETSC_DIR=${CPATH}/petsc-${PETSC_V}
-# SLEPc
-export SLEPC_V=3.19.1
-
-# HDF5
-export HDF5_V=1.12.0
-
-
-##### FOR GNU BUILD
 # GNU Compiler
 export GNUC_V=8
-# OpenMPI
-export OMPI_V=3.1.6
-export OMPI_DIR=${CPATH}/openmpi-${OMPI_V}
-
-##### FOR INTEL BUILD
 # Intel Compiler
 export INTEL_DIR=/software  # installation directory; require sudo rights to install
 export INTEL_COMP_V=2020.0.166
 export INTEL_MPI_V=2019.6.166
+
+# OpenMPI
+export OMPI_V=3.1.6
+export OMPI_DIR=${CPATH}/openmpi-${OMPI_V}
+# PETSc
+export PETSC_V 3.16.1
+export PETSC_DIR ${CPATH}/petsc-${PETSC_V}
+# SLEPc
+export SLEPC_V 3.16.0
+
+# HDF5
+ENV HDF5_V 1.12.0
 ```
 
 
@@ -101,7 +95,8 @@ export INTEL_MPI_V=2019.6.166
     rm openmpi-${OMPI_V}.tar.gz
     cd openmpi-${OMPI_V}
     ./configure --prefix=${OMPI_DIR}/gnu-opt
-    make -j20 all && make install
+    make -j6 all && make install
+    cd ..
     ```
 1. Install PETSc
     ```bash
@@ -113,29 +108,32 @@ export INTEL_MPI_V=2019.6.166
     export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}"
     export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib" 
     ## Configure and Make routine for PETSc
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-metis/get/v5.1.0-p5.tar.gz
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-parmetis/get/v4.0.3-p4.tar.gz
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-scalapack/get/v2.1.0-p2.tar.gz
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-mumps/get/v5.4.1-p1.tar.gz
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-fblaslapack/get/v3.4.2-p3.tar.gz
+    wget --no-check-certificate https://github.com/elemental/Elemental/archive/refs/heads/master.zip
     cd petsc-${PETSC_V} 
-    #
-    #
-    ###### Install PETSc Complex
+    ## Install PETSc Complex
     export PETSC_ARCH=gnu-cxx-complex-o 
     echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
-    ./config/configure.py --PETSC_ARCH=$PETSC_ARCH --with-gnu-compilers=1 --with-shared=1 --with-mpi=1 --with-mpi-dir=${OMPI_DIR}/gnu-opt --PETSC_DIR=${PETSC_DIR} --download-elemental --download-plapack --download-blacs --download-fblaslapack --download-scalapack --download-mumps --download-parmetis --download-metis --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-clanguage=cxx --with-scalar-type=complex --with-debugging=0 --with-cxx-dialect=C++11 
+    ./config/configure.py --PETSC_ARCH=$PETSC_ARCH --with-gnu-compilers=1 --with-shared=1 --with-mpi=1 --with-mpi-dir=${OMPI_DIR}/gnu-opt --PETSC_DIR=${PETSC_DIR} --download-elemental=${CPATH}/master.zip --download-plapack --download-blacs --download-fblaslapack=${CPATH}/v3.4.2-p3.tar.gz --download-scalapack=${CPATH}/v2.1.0-p2.tar.gz --download-mumps=${CPATH}/v5.4.1-p1.tar.gz --download-parmetis=${CPATH}/v4.0.3-p4.tar.gz --download-metis=${CPATH}/v5.1.0-p5.tar.gz --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-clanguage=cxx --with-scalar-type=complex --with-debugging=0 --with-cxx-dialect=C++11 
     make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH -j20 all 
     #make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH test 
-    #
-    #
-    ###### Install PETSc Real
+    ## Install PETSc Real
     export PETSC_ARCH=gnu-cxx-o 
     echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
-    ./config/configure.py --PETSC_ARCH=$PETSC_ARCH --with-gnu-compilers=1 --with-shared=1 --with-mpi=1 --with-mpi-dir=${OMPI_DIR}/gnu-opt --PETSC_DIR=${PETSC_DIR} --download-elemental --download-plapack --download-blacs --download-fblaslapack --download-scalapack --download-mumps --download-parmetis --download-metis --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-clanguage=cxx --with-scalar-type=real --with-debugging=0 --with-cxx-dialect=C++11 
+    ./config/configure.py --PETSC_ARCH=$PETSC_ARCH --with-gnu-compilers=1 --with-shared=1 --with-mpi=1 --with-mpi-dir=${OMPI_DIR}/gnu-opt --PETSC_DIR=${PETSC_DIR} --download-elemental=${CPATH}/master.zip --download-plapack --download-blacs --download-fblaslapack=${CPATH}/v3.4.2-p3.tar.gz --download-scalapack=${CPATH}/v2.1.0-p2.tar.gz --download-mumps=${CPATH}/v5.4.1-p1.tar.gz --download-parmetis=${CPATH}/v4.0.3-p4.tar.gz --download-metis=${CPATH}/v5.1.0-p5.tar.gz --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-clanguage=cxx --with-scalar-type=real --with-debugging=0 --with-cxx-dialect=C++11 
     make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH -j20 all 
     #make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH test     
+    ls ${OMPI_DIR}/gnu-opt/bin 
+    rm ${CPATH}/v5.1.0-p5.tar.gz ${CPATH}/v4.0.3-p4.tar.gz ${CPATH}/v2.1.0-p2.tar.gz ${CPATH}/v5.4.1-p1.tar.gz ${CPATH}/v3.4.2-p3.tar.gz 
+    cd ..
     ```
 1. Install ARPACK and SLEPc - complex setting
     ```bash
     cd ${CPATH} 
-    #
-    #
     #### ARAPACK Installation
     ## Environmental Variables for PETSc Install
     export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" 
@@ -155,87 +153,74 @@ export INTEL_MPI_V=2019.6.166
     cd $ARPACK_DIR 
     make cleanlib 
     make all 
-    mkdir $PETSC_ARCH &&
-    mkdir $PETSC_ARCH/lib &&
-    mv libarpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libarpack_SUN4.a &&
-    mv libparpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libparpack_MPI-SUN4.a &&
-    #
-    #
     #### SLEPc Installation
-    cd ${CPATH} &&
+    cd ${CPATH} 
     ## Environmental Variables for PETSc Install
-    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" &&
-    export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib" &&
-    export PETSC_ARCH=gnu-cxx-complex-o &&
-    export ARPACK_DIR="${CPATH}/ARPACK" &&
-    export SLEPC_DIR="${CPATH}/slepc-${SLEPC_V}" &&
-    echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH &&
+    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" 
+    export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib" 
+    export PETSC_ARCH=gnu-cxx-complex-o 
+    export ARPACK_DIR="${CPATH}/ARPACK" 
+    export SLEPC_DIR="${CPATH}/slepc-${SLEPC_V}" 
+    echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
     ## Download
-    wget --no-check-certificate https://slepc.upv.es/download/distrib/slepc-${SLEPC_V}.tar.gz &&
-    tar -xvf slepc-${SLEPC_V}.tar.gz &&
-    rm slepc-${SLEPC_V}.tar.gz &&
+    wget --no-check-certificate https://slepc.upv.es/download/distrib/slepc-${SLEPC_V}.tar.gz 
+    tar -xvf slepc-${SLEPC_V}.tar.gz 
+    rm slepc-${SLEPC_V}.tar.gz 
     ## Install
-    cd $SLEPC_DIR &&
-    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR/$PETSC_ARCH &&
-    make SLEPC_DIR=$SLEPC_DIR PETSC_DIR=$PETSC_DIR PETSC_ARCH=$PETSC_ARCH &&
+    cd $SLEPC_DIR 
+    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR --with-arpack-lib=-lparpack_gnu-cxx-complex-o,-larpack_gnu-cxx-complex-o 
+    make SLEPC_DIR=$SLEPC_DIR PETSC_DIR=$PETSC_DIR PETSC_ARCH=$PETSC_ARCH 
     #make check
     ```
 1. Install ARPACK and SLEPc - real setting
     ```bash
-    cd ${CPATH} &&
-    #
-    #
+    cd ${CPATH} 
     #### ARAPACK Installation
     ## Environmental Variables for PETSc Install
-    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}"  &&
-    export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib"  &&
-    export PETSC_ARCH=gnu-cxx-o  &&
-    export ARPACK_DIR="${CPATH}/ARPACK"  &&
-    echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH  &&
+    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" 
+    export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib" 
+    export PETSC_ARCH=gnu-cxx-o 
+    export ARPACK_DIR="${CPATH}/ARPACK" 
+    echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
     # Basic environmental flags
-    export FC=$OMPI_DIR/gnu-opt/bin/mpif77  &&
-    export FC_FLAGS=-fPIC  &&
-    echo $FC && echo $FC_FLAGS &&
+    export FC=$OMPI_DIR/gnu-opt/bin/mpif77 
+    export FC_FLAGS=-fPIC 
+    echo $FC && echo $FC_FLAGS 
     # compile ARPACK with new gcc/g++
-    cd $ARPACK_DIR  &&
-    make cleanlib  &&
-    make all  &&
-    mkdir $PETSC_ARCH &&
-    mkdir $PETSC_ARCH/lib &&
-    mv libarpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libarpack_SUN4.a &&
-    mv libparpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libparpack_MPI-SUN4.a &&
-    #
-    #
+    cd $ARPACK_DIR 
+    make cleanlib 
+    make all 
     #### SLEPc Installation
-    cd ${CPATH} && 
+    cd ${CPATH} 
     ## Environmental Variables for PETSc Install
-    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" && 
-    export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib" && 
-    export PETSC_ARCH=gnu-cxx-o  &&
-    export ARPACK_DIR="${CPATH}/ARPACK"  &&
-    export SLEPC_DIR="${CPATH}/slepc-${SLEPC_V}"  &&
-    echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH  &&
+    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" 
+    export LD_LIBRARY_PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/lib" 
+    export PETSC_ARCH=gnu-cxx-o 
+    export ARPACK_DIR="${CPATH}/ARPACK" 
+    export SLEPC_DIR="${CPATH}/slepc-${SLEPC_V}" 
+    echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
     ## Install
-    cd $SLEPC_DIR  &&
-    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR/$PETSC_ARCH &&
+    cd $SLEPC_DIR 
+    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR --with-arpack-lib=-lparpack_gnu-cxx-o,-larpack_gnu-cxx-o 
     make all
     ```
 1. HDF5 
     ```bash
-    cd ${CPATH} &&
-    wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/CMake-hdf5-${HDF5_V}.tar.gz  &&
-    tar -xvf CMake-hdf5-${HDF5_V}.tar.gz  &&
-    rm CMake-hdf5-${HDF5_V}.tar.gz  &&
-    cd CMake-hdf5-${HDF5_V}/hdf5-${HDF5_V}  &&
-    export HDF5_DIR="${CPATH}/hdf5-${HDF5_V}"  &&
-    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}"  &&
-    ls ${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin  &&
-    CC=mpicc CXX=mpicpc ./configure --prefix=${HDF5_DIR}/gnu-opt --enable-parallel --enable-shared --enable-build-mode=production --disable-hl  &&
-    make  &&
-    make install  &&
-    cd ${CPATH}  &&
+    cd ${CPATH}
+    wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/CMake-hdf5-${HDF5_V}.tar.gz 
+    tar -xvf CMake-hdf5-${HDF5_V}.tar.gz 
+    rm CMake-hdf5-${HDF5_V}.tar.gz 
+    cd CMake-hdf5-${HDF5_V}/hdf5-${HDF5_V} 
+    export HDF5_DIR="${CPATH}/hdf5-${HDF5_V}" 
+    export PATH="${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin:${PATH}" 
+    ls ${CPATH}/openmpi-${OMPI_V}/gnu-opt/bin 
+    CC=mpicc CXX=mpicpc ./configure --prefix=${HDF5_DIR}/gnu-opt --enable-parallel --enable-shared --enable-build-mode=production --disable-hl 
+    make 
+    make install 
+    cd ${CPATH} 
     rm -r CMake-hdf5-${HDF5_V}
     ```
+
 
 ### Intel build
 
@@ -246,7 +231,7 @@ export INTEL_MPI_V=2019.6.166
     ```
 1. Compiler installation instruction for TU Braunschweig users. For external user, contact IT administrator for valid license.
     ```bash
-    cd $CPATH # or any other temporary directory
+    cd /opt # or any other temporary directory
     wget --no-check-certificate https://campus-software.tu-braunschweig.de/campus-software/Intel/2020/Intel%20parallel%20Studio%20Studio%20XE%202020%20Cluster%20Edition/Linux/parallel_studio_xe_2020_cluster_edition.tgz 
     tar -xvf parallel_studio_xe_2020_cluster_edition.tgz
     rm parallel_studio_xe_2020_cluster_edition.tgz
@@ -265,38 +250,62 @@ export INTEL_MPI_V=2019.6.166
     ```
 1. Install PETSc
     ```bash
-    source ${INTEL_DIR}/compilers_and_libraries/linux/bin/compilervars.sh -arch intel64 -platform linux
+    export PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${PATH}" 
+    export PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${LD_LIBRARY_PATH}" 
 
-    # Download
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/mkl/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/compiler/lib/intel64:${LD_LIBRARY_PATH}" 
+    export CC=icc 
+    export CXX=icpc 
+    export F77=ifort 
+    export FC=ifort 
+    #
     cd ${CPATH} 
     wget --no-check-certificate ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-${PETSC_V}.tar.gz 
     tar -zxvf petsc-${PETSC_V}.tar.gz 
     rm petsc-${PETSC_V}.tar.gz 
-    #
-    #
-    ## Install petsc complex
+    ## Environmental Variables for PETSc Install
     export PETSC_ARCH=intel-cxx-complex-o 
     echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
     ## Configure and Make routine for PETSc
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-metis/get/v5.1.0-p5.tar.gz 
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-parmetis/get/v4.0.3-p4.tar.gz 
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-scalapack/get/v2.1.0-p2.tar.gz 
+    wget --no-check-certificate https://bitbucket.org/petsc/pkg-mumps/get/v5.4.1-p1.tar.gz 
+    wget --no-check-certificate https://github.com/elemental/Elemental/archive/refs/heads/master.zip 
     cd petsc-${PETSC_V} 
-    ./config/configure.py --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=mpiifort --PETSC_ARCH=$PETSC_ARCH --PETSC_DIR=$PETSC_DIR --with-blas-lapack-dir=$INTEL_DIR/intel/mkl/lib/intel64 --with-mkl_pardiso-dir=$INTEL_DIR/intel/mkl --with-mkl_cpardiso-dir=$INTEL_DIR/intel/mkl --download-elemental --download-scalapack --download-mumps --download-parmetis --download-metis --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-scalar-type=complex --with-cxx-dialect=C++11 --with-debugging=0 
+    #export CPLUS_INCLUDE_PATH=/usr/include/x86_64-linux-gnu/c++/8/ 
+    ./config/configure.py --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=mpiifort --PETSC_ARCH=$PETSC_ARCH --PETSC_DIR=$PETSC_DIR --with-blas-lapack-dir=$INTEL_DIR/intel/mkl/lib/intel64 --with-mkl_pardiso-dir=$INTEL_DIR/intel/mkl --with-mkl_cpardiso-dir=$INTEL_DIR/intel/mkl --download-elemental=${CPATH}/master.zip --download-scalapack=${CPATH}/v2.1.0-p2.tar.gz --download-mumps=${CPATH}/v5.4.1-p1.tar.gz --download-parmetis=${CPATH}/v4.0.3-p4.tar.gz --download-metis=${CPATH}/v5.1.0-p5.tar.gz --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-scalar-type=complex --with-cxx-dialect=C++11 --with-debugging=0 
     make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH -j20 all 
     #make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH test 
-    #
-    #
     ## Install petsc real
     export PETSC_ARCH=intel-cxx-o 
-    ./config/configure.py --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=mpiifort --PETSC_ARCH=$PETSC_ARCH --PETSC_DIR=$PETSC_DIR --with-blas-lapack-dir=$INTEL_DIR/intel/mkl/lib/intel64 --with-mkl_pardiso-dir=$INTEL_DIR/intel/mkl --with-mkl_cpardiso-dir=$INTEL_DIR/intel/mkl --download-elemental --download-scalapack --download-mumps --download-parmetis --download-metis --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-scalar-type=real --with-cxx-dialect=C++11 --with-debugging=0 
+    ./config/configure.py --with-cc=mpiicc --with-cxx=mpiicpc --with-fc=mpiifort --PETSC_ARCH=$PETSC_ARCH --PETSC_DIR=$PETSC_DIR --with-blas-lapack-dir=$INTEL_DIR/intel/mkl/lib/intel64 --with-mkl_pardiso-dir=$INTEL_DIR/intel/mkl --with-mkl_cpardiso-dir=$INTEL_DIR/intel/mkl --download-elemental=${CPATH}/master.zip --download-scalapack=${CPATH}/v2.1.0-p2.tar.gz --download-mumps=${CPATH}/v5.4.1-p1.tar.gz --download-parmetis=${CPATH}/v4.0.3-p4.tar.gz --download-metis=${CPATH}/v5.1.0-p5.tar.gz --download-metis-cmake-arguments=-DMETIS_USE_DOUBLEPRECISION=1 --with-scalar-type=real --with-cxx-dialect=C++11 --with-debugging=0 
     make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH -j20 all 
     #make PETSC_DIR=${PETSC_DIR} PETSC_ARCH=$PETSC_ARCH test 
+    rm ${CPATH}/v5.1.0-p5.tar.gz ${CPATH}/v4.0.3-p4.tar.gz ${CPATH}/v2.1.0-p2.tar.gz ${CPATH}/v5.4.1-p1.tar.gz
     ```
 1. Install ARPACK and SLEPc - complex setting
     ```bash
-    source ${INTEL_DIR}/compilers_and_libraries/linux/bin/compilervars.sh -arch intel64 -platform linux
-    #
-    #
+    export PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${PATH}" 
+    export PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${LD_LIBRARY_PATH}" 
+
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/mkl/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/compiler/lib/intel64:${LD_LIBRARY_PATH}" 
+    export CC=icc 
+    export CXX=icpc 
+    export F77=ifort 
+    export FC=ifort 
+    ######################################################
     #### ARAPACK Installation
     cd ${CPATH} 
+    ## Environmental Variables for PETSc Install
     export PETSC_ARCH=intel-cxx-complex-o 
     export ARPACK_DIR="${CPATH}/ARPACK" 
     echo $LD_LIBRARY_PATH && echo ${PETSC_DIR} && echo $PETSC_ARCH 
@@ -312,12 +321,7 @@ export INTEL_MPI_V=2019.6.166
     cd $ARPACK_DIR 
     make cleanlib 
     make all 
-    mkdir $PETSC_ARCH
-    mkdir $PETSC_ARCH/lib
-    mv libarpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libarpack_SUN4.a
-    mv libparpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libparpack_MPI-SUN4.a
-    #
-    #
+    ######################################################
     #### SLEPc Installation
     cd ${CPATH} 
     ## Environmental Variables for SLEPc Install
@@ -331,15 +335,25 @@ export INTEL_MPI_V=2019.6.166
     rm slepc-${SLEPC_V}.tar.gz 
     ## Install
     cd $SLEPC_DIR 
-    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR/$PETSC_ARCH
+    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR --with-arpack-lib=-lparpack_intel-cxx-complex-o,-larpack_intel-cxx-complex-o 
     make all 
     make check
     ```
 1. Install ARPACK and SLEPc - real setting
     ```bash
-    source ${INTEL_DIR}/compilers_and_libraries/linux/bin/compilervars.sh -arch intel64 -platform linux
-    #
-    #
+    export PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${PATH}" 
+    export PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${LD_LIBRARY_PATH}" 
+
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/mkl/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/compiler/lib/intel64:${LD_LIBRARY_PATH}" 
+    export CC=icc 
+    export CXX=icpc 
+    export F77=ifort 
+    export FC=ifort 
+    ######################################################
     #### ARAPACK Installation
     cd ${CPATH} 
     ## Environmental Variables for PETSc Install
@@ -358,12 +372,7 @@ export INTEL_MPI_V=2019.6.166
     cd $ARPACK_DIR 
     make cleanlib 
     make all 
-    mkdir $PETSC_ARCH
-    mkdir $PETSC_ARCH/lib
-    mv libarpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libarpack_SUN4.a
-    mv libparpack_$PETSC_ARCH.a $PETSC_ARCH/lib/libparpack_MPI-SUN4.a
-    #
-    #
+    ######################################################
     #### SLEPc Installation
     cd ${CPATH} 
     ## Environmental Variables for SLEPc Install
@@ -377,15 +386,24 @@ export INTEL_MPI_V=2019.6.166
     rm slepc-${SLEPC_V}.tar.gz 
     ## Install
     cd $SLEPC_DIR 
-    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR/$PETSC_ARCH
+    ./config/configure.py --with-arpack --with-arpack-dir=$ARPACK_DIR --with-arpack-lib=-lparpack_intel-cxx-o,-larpack_intel-cxx-o 
     make all 
     make check
     ```
 1. HDF5 
     ```bash
-    source ${INTEL_DIR}/compilers_and_libraries/linux/bin/compilervars.sh -arch intel64 -platform linux
-    #
-    #
+    export PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${PATH}" 
+    export PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/bin/:${LD_LIBRARY_PATH}" 
+
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/bin/intel64/:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/impi/${INTEL_MPI_V}/intel64/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/mkl/lib:${LD_LIBRARY_PATH}" 
+    export LD_LIBRARY_PATH="${INTEL_DIR}/intel/compilers_and_libraries_${INTEL_COMP_V}/linux/compiler/lib/intel64:${LD_LIBRARY_PATH}" 
+    export CC=icc 
+    export CXX=icpc 
+    export F77=ifort 
+    export FC=ifort 
     cd ${CPATH} 
     wget --no-check-certificate https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-1.12/hdf5-1.12.0/src/CMake-hdf5-${HDF5_V}.tar.gz 
     tar -xvf CMake-hdf5-${HDF5_V}.tar.gz 
@@ -442,7 +460,3 @@ Python installation is not required for normal use. But following are the stable
 sudo apt-get install -y --no-install-recommends python python3-pip git
 sudo python3 -m pip install tikzplotlib fpdf PyPDF2 python-gitlab gitpython pandas
 ```
-
-## Older records
-
-Installation for PETSc 3.16.1 package - [See file](./older_/maintaining_libraries-3161.md)

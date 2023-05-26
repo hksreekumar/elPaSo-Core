@@ -44,8 +44,8 @@ elPaSo Core can be used as a standalone software and can also be used as a FEM l
         Microsoft Visual Studio Code  - IDE for code development (with docker containers)
         Cmake                   (Stable: 3.16.3) - Project building
         GNU/Intel compilers     (Stable: GNU 8)/(Intel parallel studio 2020)
-        PETSc                   (Stable: 3.16.1)
-        SLEPc                   (Stable: 3.16.0)
+        PETSc                   (Stable: 3.19.1)
+        SLEPc                   (Stable: 3.19.1)
         ARPACK                  (Stable: 2.1)
         Intel MKL               (Stable: Intel parallel studio 2020)
         HDF5                    (Stable: 1.12.0)

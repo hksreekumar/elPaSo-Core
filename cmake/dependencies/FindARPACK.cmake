@@ -3,7 +3,7 @@
 #
 # 14.10.2020
 # Harikrishnan Sreekumar
-# Institut für Akustik, Technische Universität Braunschweig
+# Institut fï¿½r Akustik, Technische Universitï¿½t Braunschweig
 #---------------------------------------------------------------------------#
 
 # ---- Start point for ARPACK libs finding -----------------------------------------------------------#
@@ -16,7 +16,7 @@ IF(${ELPASO_OS_LIN_x86_64} MATCHES FOUND)
     IF(EXISTS ${ARPACK_ROOT_DIR})
         # ---- Set each library ---------------------------------------------------------------------#
         SET(ARPACK_INCLUDE_DIR "${ARPACK_ROOT_DIR}")    # ARPACK_INCLUDE_DIR
-        SET(ARPACK_LIBRARY_DIR "${ARPACK_ROOT_DIR}")        # ARPACK_LIBRARY_DIR
+        SET(ARPACK_LIBRARY_DIR "${ARPACK_ROOT_DIR}/${PETSC_ARCH}/lib")        # ARPACK_LIBRARY_DIR
         
         # ---- Link and include directories ---------------------------------------------------------#
         LINK_DIRECTORIES(${ARPACK_LIBRARY_DIR})
@@ -25,8 +25,8 @@ IF(${ELPASO_OS_LIN_x86_64} MATCHES FOUND)
         # ---- Find each Library --------------------------------------------------------------------#
         SET(HANDLE_ARPACK_LIBS)
 
-        FIND_LIBRARY(HANDLE_ARPACK_LIB_ARPACK_${PETSC_ARCH}         libarpack_${PETSC_ARCH}.a       ${ARPACK_LIBRARY_DIR} NO_DEFAULT_PATH)
-        FIND_LIBRARY(HANDLE_ARPACK_LIB_PARPACK_${PETSC_ARCH}        libparpack_${PETSC_ARCH}.a      ${ARPACK_LIBRARY_DIR} NO_DEFAULT_PATH)
+        FIND_LIBRARY(HANDLE_ARPACK_LIB_ARPACK_${PETSC_ARCH}         libarpack_SUN4.a            ${ARPACK_LIBRARY_DIR} NO_DEFAULT_PATH)
+        FIND_LIBRARY(HANDLE_ARPACK_LIB_PARPACK_${PETSC_ARCH}        libparpack_MPI-SUN4.a       ${ARPACK_LIBRARY_DIR} NO_DEFAULT_PATH)
         SET(HANDLE_ARPACK_LIBS ${HANDLE_ARPACK_LIBS} ${HANDLE_ARPACK_LIB_ARPACK_${PETSC_ARCH}} ${HANDLE_ARPACK_LIB_PARPACK_${PETSC_ARCH}})
 
         # ---- Set FLAGS for ARPACK ------------------------------------------------------------------#

@@ -51,87 +51,84 @@ Maintaining packages would require the above setup and rights to push packages i
 ```{warning}
 Make sure your system environment is compatible with the elPaSo architechture. Recheck for compiler (GNU or Intel) and package versions.
 ```
-### Some easy installation flags
-
-```bash
-export GNU_BUILD_PATH=<gnu_compiled_library_path>
-export INTEL_BUILD_PATH=<gnu_compiled_library_path>
-export PATH_CONAN_ELPASO_REPOS=<elpaso_core_module_repository>/elpasoCore/conan/
-```
 
 ### PETSc-Real
 
-{bdg-secondary}`stable | PETSc 3.19.1`
+{bdg-secondary}`stable | PETSc 3.16.1`
 
 ```bash
-export PETSC_VERSION=3.19.1 &&
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
+export PETSC_VERSION=3.16.1
 
 # GNU compiled
-export PATH_LOCAL_LIB=$GNU_BUILD_PATH/petsc-$PETSC_VERSION &&
-cd $PATH_LOCAL_LIB &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsGNU-PS16/petsc-3.16.1
+cd $LOCAL_LIB_PATH
 conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-real-gnu.py petsc-real/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
 
 # Intel compiled
-export PATH_LOCAL_LIB=$INTEL_BUILD_PATH/petsc-$PETSC_VERSION &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-real-intel.py petsc-real/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsI20-PS16/petsc-3.16.1
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-real-intel.py petsc-real/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
 conan upload petsc-real/$PETSC_VERSION@ina+elpaso/stable --all -r gitlab
 ```
 
 ### PETSc-Complex
 
-{bdg-secondary}`stable | PETSc 3.19.1`
+{bdg-secondary}`stable | PETSc 3.16.1`
 
 ```bash
-export PETSC_VERSION=3.19.1 &&
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
+export PETSC_VERSION=3.16.1
 
 # GNU compiled
-export PATH_LOCAL_LIB=$GNU_BUILD_PATH/petsc-$PETSC_VERSION &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-complex-gnu.py petsc-complex/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsGNU-PS16/petsc-3.16.1
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-complex-gnu.py petsc-complex/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
 
 # Intel compiled
-export PATH_LOCAL_LIB=$INTEL_BUILD_PATH/petsc-$PETSC_VERSION &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-complex-intel.py petsc-complex/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsI20-PS16/petsc-3.16.1
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-petsc/conanfile-petsc$PETSC_VERSION-complex-intel.py petsc-complex/$PETSC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
 conan upload petsc-complex/$PETSC_VERSION@ina+elpaso/stable --all -r gitlab
 ```
 
 ### SLEPc-Real
 
-{bdg-secondary}`stable | SLEPc 3.19.1`
+{bdg-secondary}`stable | SLEPc 3.16.0`
 
 ```bash
-export SLEPC_VERSION=3.19.1
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
+export SLEPC_VERSION=3.16.0
 
 # GNU compiled
-export PATH_LOCAL_LIB=$GNU_BUILD_PATH/slepc-$SLEPC_VERSION
-cd $PATH_LOCAL_LIB
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-slepc/conanfile-slepc$SLEPC_VERSION-real-gnu.py slepc-real/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsGNU-PS16/slepc-3.16.0
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-slepc/conanfile-slepc$SLEPC_VERSION-real-gnu.py slepc-real/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
 
 # Intel compiled
-export PATH_LOCAL_LIB=$INTEL_BUILD_PATH/slepc-$SLEPC_VERSION
-cd $PATH_LOCAL_LIB
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-slepc/conanfile-slepc$SLEPC_VERSION-real-intel.py slepc-real/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsI20-PS16/slepc-3.16.0
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-slepc/conanfile-slepc$SLEPC_VERSION-real-intel.py slepc-real/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
 conan upload slepc-real/$SLEPC_VERSION@ina+elpaso/stable --all -r gitlab
 ```
 
 ### SLEPc-Complex
 
-{bdg-secondary}`stable | SLEPc 3.19.1`
+{bdg-secondary}`stable | SLEPc 3.16.0`
 
 ```bash
-export SLEPC_VERSION=3.19.1
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
+export SLEPC_VERSION=3.16.0
 
 # GNU compiled
-export PATH_LOCAL_LIB=$GNU_BUILD_PATH/slepc-$SLEPC_VERSION
-cd $PATH_LOCAL_LIB
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-slepc/conanfile-slepc$SLEPC_VERSION-complex-gnu.py slepc-complex/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsGNU-PS16/slepc-3.16.0
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-slepc/conanfile-slepc$SLEPC_VERSION-complex-gnu.py slepc-complex/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
 
 # Intel compiled
-export PATH_LOCAL_LIB=$INTEL_BUILD_PATH/slepc-$SLEPC_VERSION
-cd $PATH_LOCAL_LIB
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-slepc/conanfile-slepc$SLEPC_VERSION-complex-intel.py slepc-complex/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsI20-PS16/slepc-3.16.0
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-slepc/conanfile-slepc$SLEPC_VERSION-complex-intel.py slepc-complex/$SLEPC_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
 conan upload slepc-complex/$SLEPC_VERSION@ina+elpaso/stable --all -r gitlab
 ```
 
@@ -140,17 +137,18 @@ conan upload slepc-complex/$SLEPC_VERSION@ina+elpaso/stable --all -r gitlab
 {bdg-secondary}`stable | ARPACK 2.1`
 
 ```bash
-export ARPACK_VERSION=2.1 &&
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
+export ARPACK_VERSION=2.1
 
 # GNU compiled
-export PATH_LOCAL_LIB=$GNU_BUILD_PATH/ARPACK &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-arpack/conanfile-arpack$ARPACK_VERSION-real-gnu.py arpack-real/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsGNU-PS16/ARPACK
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-arpack/conanfile-arpack$ARPACK_VERSION-real-gnu.py arpack-real/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
 
 # Intel compiled
-export PATH_LOCAL_LIB=$INTEL_BUILD_PATH/ARPACK &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-arpack/conanfile-arpack$ARPACK_VERSION-real-intel.py arpack-real/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsI20-PS16/ARPACK
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-arpack/conanfile-arpack$ARPACK_VERSION-real-intel.py arpack-real/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
 conan upload arpack-real/$ARPACK_VERSION@ina+elpaso/stable --all -r gitlab
 ```
 
@@ -159,18 +157,19 @@ conan upload arpack-real/$ARPACK_VERSION@ina+elpaso/stable --all -r gitlab
 {bdg-secondary}`stable | ARPACK 2.1`
 
 ```bash
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
 export ARPACK_VERSION=2.1
 
 # GNU compiled
-export PATH_LOCAL_LIB=$GNU_BUILD_PATH/ARPACK &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-arpack/conanfile-arpack$ARPACK_VERSION-complex-gnu.py arpack-complex/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f &&
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsGNU-PS16/ARPACK
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-arpack/conanfile-arpack$ARPACK_VERSION-complex-gnu.py arpack-complex/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=gcc -s compiler.version=8 -s compiler.libcxx=libstdc++11 -f
 
 # Intel compiled
-export PATH_LOCAL_LIB=$INTEL_BUILD_PATH/ARPACK &&
-cd $PATH_LOCAL_LIB &&
-conan export-pkg $PATH_CONAN_ELPASO_REPOS/conan-arpack/conanfile-arpack$ARPACK_VERSION-complex-intel.py arpack-complex/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f &&
-conan upload arpack-complex/$ARPACK_VERSION@ina+elpaso/stable --all -r gitlab-core
+export PATH_LOCAL_LIB=/home/sreekumar/software/libsconan/PS16/libsI20-PS16/ARPACK
+cd $LOCAL_LIB_PATH
+conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoResearch/envci/conanPackages/conan-arpack/conanfile-arpack$ARPACK_VERSION-complex-intel.py arpack-complex/$ARPACK_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
+conan upload arpack-complex/$ARPACK_VERSION@ina+elpaso/stable --all -r gitlab
 ```
 
 ### OpenMPI
@@ -178,6 +177,7 @@ conan upload arpack-complex/$ARPACK_VERSION@ina+elpaso/stable --all -r gitlab-co
 {bdg-secondary}`stable | OpenMPI 3.1.6`
 
 ```bash
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
 export OPENMPI_VERSION=3.1.6
 
 # GNU compiled
@@ -192,6 +192,7 @@ conan upload openmpi/$OPENMPI_VERSION@ina+elpaso/stable --all -r gitlab
 {bdg-secondary}`stable | HDF5 1.12.0`
 
 ```bash
+export PATH_CONAN_ELPASO_REPOS=<elpaso_research_module_repository>/elpasoResearch/envci/conanPackages
 export HDF5_VERSION=1.12.0
 
 # GNU compiled
@@ -236,7 +237,3 @@ conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoCore/conan/conan-elpasocore/cona
 conan export-pkg $PATH_CONAN_ELPASO_REPOS/elpasoCore/conan/conan-elpasocore/conanfile-elpasocore-complex-intel.py elpasocore-complex/$ELPASOCORE_VERSION@ina+elpaso/stable -s os=Linux -s compiler=intel -s compiler.version=19.1 -s compiler.libcxx=libstdc++11 -f
 conan upload elpasocore-real/$ELPASOCORE_VERSION@ina+elpaso/stable --all -r gitlab
 ```
-
-## Older records
-
-Installation for PETSc 3.16.1 package - [See file](./older_/maintaining_conanregistry-3161.md)

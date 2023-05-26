@@ -84,8 +84,8 @@ void cLogging::openLogFile(const std::string &filename)
   message( "  IntelMPI_VER    : %s \n", I_MPI_VERSION );
 #endif
   message( "  PETSC_ARCH      : %s\n", PETSC_ARCH ); //Since PETSC 3.1 we have to use PETSC_ARCH. Previous PETSC versions need PETSC_ARCH_NAME
-  message( "  PETSC_VER       : %d.%d.%d-p%d \n", PETSC_VERSION_MAJOR, PETSC_VERSION_MINOR, PETSC_VERSION_SUBMINOR, PETSC_VERSION_PATCH );
-  message( "  SLEPC_VER       : %d.%d.%d-p%d \n", SLEPC_VERSION_MAJOR, SLEPC_VERSION_MINOR, SLEPC_VERSION_SUBMINOR, SLEPC_VERSION_PATCH );
+  message( "  PETSC_VER       : %d.%d.%d \n", PETSC_VERSION_MAJOR, PETSC_VERSION_MINOR, PETSC_VERSION_SUBMINOR );
+  message( "  SLEPC_VER       : %d.%d.%d \n", SLEPC_VERSION_MAJOR, SLEPC_VERSION_MINOR, SLEPC_VERSION_SUBMINOR );
 #ifdef HDF5_VERSION
   message( "  HDF5_VER        : %s \n", HDF5_VERSION );
 #endif
