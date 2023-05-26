@@ -1,6 +1,6 @@
 # Research code elPaSo
 
-The research code “Elementary Parallel Solver (elPaSo)” is the in-house vibroacoustic simulation tool constantly developed over 25 years at TU Braunschweig, presently extended and maintained by the Institute for Acoustics (InA), TU Braunschweig.
+The research code “Elementary Parallel Solver (elPaSo)” is an in-house vibroacoustic simulation tool constantly developed over 25 years at TU Braunschweig, presently extended and maintained by the Institute for Acoustics (InA), TU Braunschweig.
 
 ```{image} ../images/elPaSo_InA2021.png
 :width: 400px
@@ -21,7 +21,7 @@ The tool is used extensively for research and teaching for many years. The whole
 :::
 
 :::{grid-item-card} 
-[<b>Developer Documenation</b>](../technical/technical.md)
+[<b>Developer Documentation</b>](../technical/technical.md)
 :::
 
 ::::
@@ -32,7 +32,7 @@ The tool is used extensively for research and teaching for many years. The whole
 The capabilities of the tool include acoustic and structural analysis using the popular numerical methods of FEM, BEM and SBFEM supporting various complex material and element types. The solver is suitable for acoustic and structural analysis for static analysis, modal analysis, time domain analysis and frequency domain analysis. Various applied fields with elPaSo are building acoustics, geometric optimizations, wave propagation, soil-structure interactions and fluid-structure interaction.
 
 ### Uncertainty quantification
-elPaSo enables non-intrusive parametric uncertainty quantification (UQ). This capability allows the use of elPaSo as a black-box to obtain the system response associated with each realisation of random vector and UQ is performed as an extension of the deterministic analysis of the model. Also, the possibility to parallelize the elPaSo code in this approach provides an added advantage. These characteristics make the elPaSo solver very attractive for parametric uncertainty quantification in complex models and industrial applications.
+elPaSo enables non-intrusive parametric uncertainty quantification (UQ). This capability allows the use of elPaSo as a black-box to obtain the system response associated with each realization of random vector and UQ is performed as an extension of the deterministic analysis of the model. Also, the possibility to parallelize the elPaSo code in this approach provides an added advantage. These characteristics make the elPaSo solver very attractive for parametric uncertainty quantification in complex models and industrial applications.
 
 ### Model order reduction
 elPaSo provides methods to perform model order reduction in both frequency and parameter domain. As a result, computations can be performed faster in a reduced space without compromising on accuracy. The methods are constantly developed and improved for handling large-scale vibroacoustics models.

@@ -3,6 +3,7 @@
 
 title: "elPaSo Documentation"
 author: "Technische Universität Braunschweig, Institut für Akustik"
+copyright: "2023"
 logo: logo/InA-TECH-elPaSo-rgb.png
 exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
 
