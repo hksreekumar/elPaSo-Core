@@ -46,6 +46,7 @@ mpirun -np 4 elpasoC -c -inp myInputFile.hdf5
 
 In order to run the program using 4 processes. <tt>mpirun</tt> is the instance supplied from an MPI vendor. For GNU compiler build, we use OpenMPI and for INTEL compiler build, we use Intel MPI.
 
+(hpc-execution)=
 ### HPC execution 🚀
 
 Prepare the job script and submit to the queing system using <tt>sbatch</tt>:

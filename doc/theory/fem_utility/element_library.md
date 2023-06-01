@@ -7,8 +7,8 @@ Refer [Feature Overview](../feature_overview.md) for availability.
 ## Beam elements
 | **Beam**                            | **Nodes** | **Dofs**               | **Material**         |  |
 |--------------------------------------|:------:|:--------------------|:--------------|:------:|
-| BeamBernoulli | 2 | $x_{1,2}; w_3$      | $E, A, I, t$        | <img src = "../../images/elements/line2d.png" width="250px"> |
-| BeamTimoshenko           | 2 | $x_{1,2}; w_3$  | $E$, $A$, $I$, $\rho$, $\nu$ | <img src = "../../images/elements/line2d.png" width="250px"> |
+| BeamBernoulli | 2 | $x_{1,2}; w_3$      | $E, A, I_y, t$        | <img src = "../../images/elements/line2d.png" width="250px"> |
+| BeamTimoshenko           | 2 | $x_{1,2}; w_3$  | $E$, $A$, $I_y$, $\rho$, $\nu$ | <img src = "../../images/elements/line2d.png" width="250px"> |
 | BeamBernoulli10           | 2 | $ x_{1,2,3}$; $ w_{2,3}$  | $E$, $A$, $Iy$, $Iz$, $\rho$ | <img src = "../../images/elements/line3d.png" width="250px"> |
 | BeamTimoshenko10           | 2 | $ x_{1,2,3}$; $ w_{2,3}$  | $E$, $A$, $Iy$, $Iz$, $\rho$, $\nu$ | <img src = "../../images/elements/line3d.png" width="250px"> |
 | BeamBernoulli12           | 2 | $ x_{1,2,3}$; $ w_{1,2,3}$  | $E$, $A$, $Ix$, $Iy$, $Iz$, $\rho$ | <img src = "../../images/elements/line3d.png" width="250px"> |

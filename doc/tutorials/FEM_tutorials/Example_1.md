@@ -28,20 +28,18 @@ The objective of this tutorial is to model a simply supported plate made of alum
 
 ----
 
-## Procedure 
 As already described in the general overview, the typical steps to model an acoustic problem are:
-  - Pre-Processing (Cubit Coreform / Abaqus)
+  - Modelling (Cubit Coreform / Abaqus)
   - Solving
   - Post-Processing
 
-A detailed overview of each of the steps is provided in the following sections.
+## Modelling 
 
-### Pre-Processing
-Pre-processing includes all the procedures before Solving. The following sections explain the pre-Processing routine with respect to two different programs:
+Modelling includes all the procedures before Solving. The following sections explain the modelling routine with respect to two different programs:
   - Cubit Coreform and elPaSo Pre-Processor
   - Abaqus
 
-#### Pre-Processing with Cubit Coreform and elPaSo Pre-Processor
+### Pre-Processing with Cubit Coreform and elPaSo Pre-Processor
 This section explains the use of Cubit Coreform and elPaSo Pre-Processor commands required for the pre-Processing routine. The geometry will be setup within Cubit Coreform, while loads, boundary conditions and material parameters will be defined within the elPaSo Pre-Processor. \
 The geometry generation in Cubit Coreform can be done in two ways, first is to go by the interface, second is to write a Journal Script in ![](../../images/Tutorials/Cubit_icons/journaleditor.PNG) (or Tools > Journal Editor) and run it at once. The scripting interface is recommended for complex geometries. Both the methods are described in detail in the following sections. \
 The Pre-Processing routine can be subdivided into following section: 
@@ -51,7 +49,7 @@ The Pre-Processing routine can be subdivided into following section:
   * Applying External Force (in elPaSo Pre-Processor)
   * Exporting to elPaSo Solver (in elPaSo Pre-Processor)
 
-##### Modeling of Geometry
+#### Modeling of Geometry
 ```{warning} 
 Before starting, the working directory has to be set! \
 **Follow: Menu Bar > File > Set Directory > <directory_name>** 
@@ -69,7 +67,7 @@ Before starting, the working directory has to be set! \
   move surface 1 x 0.45 y 0.3 z 0</tt> 
   `````
 
-##### Meshing
+#### Meshing
 * During meshing, the surface is equipped with nodes and elements. This will be realized in the Command Panel by clicking on ![](../../images/Tutorials/Cubit_icons/mesh.PNG) (Mesh) > ![](../../images/Tutorials/Cubit_icons/Surfaces.PNG) (Surfaces) > ![](../../images/Tutorials/Cubit_icons/Define_interval_and_sizes.PNG) (Define intervals and sizes) > ![](../../images/Tutorials/Cubit_icons/Approximate_size.PNG) (Approximate size) > 'Select surfaces' (1) > 'Approximate size' (0.1) > Apply Size. \
 Afterwards, the user can mesh the surface by clicking on 'Mesh'.
 ```{warning} 
@@ -95,7 +93,7 @@ block 1 add face all</tt>
 block 1 element type SHELL4</tt>
 ````` 
 
-##### Create nodesets
+#### Create nodesets
 * In order to apply external forces and boundary conditions to the plate model in the elPaSo Pre-Processor, nodesets have to be created within Cubit Coreform. 
 * First, a nodeset for the boundary conditions will be created by clicking on ![](../../images/Tutorials/Cubit_icons/Analysis_Groups_and_Materials.PNG) (Analysis Groups and Materials) > ![](../../images/Tutorials/Cubit_icons/Nodesets.PNG) (Nodesets) > ![](../../images/Tutorials/Cubit_icons/Create_nodesets.PNG) (Create nodesets) > 'Nodeset ID' (1) > 'Select' (Curve) > 'ID(s)' (all) > 'Apply'
 
@@ -115,22 +113,23 @@ nodeset 2 add node 70</tt>
 The Node ID = 70 for the external load can vary in the users program. Please select a node with coordinates $(x_{F},y_{F}) = (0.1,0.1) \text{ m}$
 ```
 
-##### Export as *.cub5 file
+#### Export as *.cub5 file
 * After creating the geometrical model the user now have to export the specifications to the elPaSo Pre-Processor to proceed with the next Pre-Processing steps. This can be done by clicking in the menu bar on 'File' > 'Save' > 'Data type' (Cubit files(*.cub5)) > Type in a remarkable name > 'Save'
 
-##### Analysis and mesh settings
+#### Analysis and mesh settings
 * Now, the Pre-Processing routine will be continued in the elPaSo Pre-Processor. Therefore, the elPaSo Pre-Processor can be called via the command line:
 ```bash
 python3 <path_to_preprocessor_codes>/main.py
 ```
-* If the elPaSo Pre-Processor is opened, the user needs to load the *cub.5 file, which is intuitively realized in the prompted Explorer-GUI.
-* The user needs to select the elPaSo-specific Element type 'DSG4' in 'Element type'.
-* Furthermore, the frequency range of the analysis has to be defined as shown in the picture below.
+* If the elPaSo Pre-Processor is opened, the user needs to load the *cub5 file, which is intuitively realized in the prompted Explorer-GUI.
+* In `Model` space: The user needs to select the elPaSo-specific Element type 'DSG4' in 'Element type'.
+* In `Analysis` tab: Furthermore, the frequency range of the analysis has to be defined as shown in the picture below.
 
 ![](../../images/Tutorials/FEM_Tutorials/Example_1/Analysis_settings.PNG)
 
 (Ex_1_Ext_F)=
-##### External loads
+#### External loads
+* Change to `Loads` tab.
 * A Force F = 1N in the z-direction (remember that the geometry is in z-plane) is to be applied at the required node. Keep in mind that you can only define loads that act on nodes!
 * The nodeset for the external load was already defined in Cubit Coreform as 'Nodeset 2'
 
@@ -141,7 +140,8 @@ python3 <path_to_preprocessor_codes>/main.py
 ![](../../images/Tutorials/FEM_Tutorials/Example_1/External_load_drawn.PNG)
 
 (Ex_1_Mat)=
-##### Material
+#### Material
+* Change to `Materials` tab.
 * The material can be chosen under 'Material Type' (STRUCT linear elastic iso) and added to the model by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.PNG) next to 'Material Type' (for further information on material types please refer to the different [material types](Material_types))
 * Furthermore, the material can be named (here, Aluminium) as well as defined by its different properties by clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_2.PNG) next to 'Aluminium'
 ```{warning} 
@@ -151,30 +151,31 @@ Also the plate's thickness has to be set in 'Edit Material' (here: 0.003)
 ![](../../images/Tutorials/FEM_Tutorials/Example_1/Material.PNG) 
 
 (Ex_1_BCs)=
-##### Boundary Conditions (BCs)
+#### Boundary Conditions (BCs)
+* Change to `Constraints` tab.
 * Finally, the boundary conditions will be set in 'Constraints' by choosing 'BC | Structure | Fieldvalue' and clicking on ![](../../images/Tutorials/FEM_Tutorials/Example_1/Icon_1.PNG)
 * Next to this, the constraints have to be set in 'Edit constraint': Here, a simply supported plate is assumed, so that only the translatoric degree of freedom in z-direction is blocked (tick 'u3') (for further information about the elements degrees of freedom please refer to the [element library](Element_library))
 
 ![](../../images/Tutorials/FEM_Tutorials/Example_1/BC.PNG) 
 
-##### Export as *.hdf5 file
+#### Export as *.hdf5 file
 * The export as an *.hdf5 file is realised by clicking on 'Save and Exit'
 
 
-#### Pre-Processing with Abaqus
+### Pre-Processing with Abaqus
 ```{warning} 
 Under construction. Content will be available soon.
 ```
 ----
 
-### Solving 
-After completing the pre-Processing routine, the user can call elPaSo via the terminal:
+## Solving 
+After completing the pre-Processing routine, the user can call elPaSo via the terminal (elpasoC must be callable!):
 ```bash
-<path_to_elpaso>\elpasoC -c -inp <filename>.hdf5
+elpasoC -c -inp <filename>.hdf5
 ```
 A successful solving would lead to generation of output files (eGenOutput*.hdf5 when for hdf5 output or *.vtk files for vtk output) with the solutions. You may also check the `*.log.0` file for the elPaSo run logs.
 
-### Post-Processing 
+## Post-Processing 
 After having solved for primary variables, one need to do Post-Processing to calculate derived variables and visualize the results. Post-processing is done for every frequency step and then saved in vtk-legacy format to the working directory. 
 * Therefore, the user has to open the elPaSo Post-Processor via the command line:
 ```bash
@@ -189,7 +190,7 @@ Please load the initial *.hdf5 file, not the eGenOutput_<filename>.*hdf5 file!
 ![](../../images/Tutorials/FEM_Tutorials/Example_1/Post_Processor.PNG)
 
 (Ex_1_DSG_comp)=
-#### Comparison between modeling with DSG4 and DSG9 elements
+### Comparison between modeling with DSG4 and DSG9 elements
 The tutorial presented the computations by using DSG4 as element type. Following we present the results obtained by the quadratic variant `DSG9`. Comparing the FRF plots below, the second resolve the wave better and detects more resonance peaks. This is reasoned in the use of DSG9 elements, which possess 9 nodes per elements when compared to 4 nodes per element for DSG4 (see [element library](Element_library)). Therefore, the DSG9 element offers a more accurate modeling of the plate movement due to the extra refinement.
 
 `````{admonition} Notice...

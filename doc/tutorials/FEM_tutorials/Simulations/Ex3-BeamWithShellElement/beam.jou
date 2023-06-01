@@ -1,0 +1,20 @@
+reset 
+label off
+
+### Create geometry (only a surface)
+create surface rectangle width 0.5 height 0.03 zplane 
+move Surface all x 0.25 y 0.015 z 0 include_merged 
+
+### Mesh the surface
+surface all size 0.1
+mesh surface all
+
+### Add all faces into a block
+block 1 face all
+block 1 element type shell9
+
+### Nodesets for boundary condition and excitation
+nodeset 1 add node all in curve 4
+nodeset 2 add node all in curve 2
+
+

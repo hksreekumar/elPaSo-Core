@@ -30,6 +30,7 @@ parts:
         sections:
         - file: tutorials/FEM_tutorials/Example_1
         - file: tutorials/FEM_tutorials/Example_2
+        - file: tutorials/FEM_tutorials/Example_3
   - caption: Developer Documentations 💻
     chapters:
     - file: technical/technical
