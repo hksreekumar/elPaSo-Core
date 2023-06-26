@@ -23,6 +23,7 @@
 #include "../../bc/boundaryconditionfluid.h"
 #include "../../material/fluid/materialfluid.h"
 #include "../elementfem.h"
+#include "../load/elementloadvn.h"
 
 //! @brief base class for all fluidelements
 //! @author Dirk Clasen

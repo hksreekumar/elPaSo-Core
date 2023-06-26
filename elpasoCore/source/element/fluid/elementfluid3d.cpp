@@ -252,7 +252,7 @@ void cElementFluid3d::assembleDynamicLoadVector(const PetscReal &omega,
     // -----------------------------------------------------------------------
     //   check if load is a normal velocity
     // -----------------------------------------------------------------------
-    /*cElementLoadVn *ptrVn = dynamic_cast<cElementLoadVn *>(itLoads->second);
+    cElementLoadVn *ptrVn = dynamic_cast<cElementLoadVn *>(itLoads->second);
     if (ptrVn != NULL)
     {
       const int          nnod_face = getNumberOfNodesPerFace();
@@ -262,50 +262,49 @@ void cElementFluid3d::assembleDynamicLoadVector(const PetscReal &omega,
 
 #ifdef PETSC_USE_COMPLEX
       if (ptrVn->getType() == vn)
-                    //Vn.setValue( 1. * std::complex<PetscReal>(.0, 1.0) *
-m_Material->getRhoOmega() * omega * ptrVn->getValue() ); // by Dirk Vn.setValue(
--1. * std::complex<PetscReal>(.0, 1.0) * m_Material->getRhoOmega() * omega *
-ptrVn->getValue() ); // by Meike else if (ptrVn->getType() == flux) Vn.setValue(
-ptrVn->getValue()); else
+		    //Vn.setValue( 1. * std::complex<PetscReal>(.0, 1.0) * m_Material->getRhoOmega() * omega * ptrVn->getValue() ); // by Dirk
+         Vn.setValue(  -1. * std::complex<PetscReal>(.0, 1.0) * m_Material->getRhoOmega() * omega * ptrVn->getValue() ); // by Meike
+      else if (ptrVn->getType() == flux)
+        Vn.setValue( ptrVn->getValue());
+      else
       {
-        throw cException("no type specified for cElementLoadVn", __FILE__,
-__LINE__);
+        throw cException("no type specified for cElementLoadVn", __FILE__, __LINE__);
       }
 #else
 // vn without complex numbers: assuming time-domain computation
-         // if (m_AnalysisType == Time)
-        //	{
-                        if (ptrVn->getType() == vn || ptrVn->getType() == flux)
-                                Vn.setValue( ptrVn->getValue() );
-                        else
-                        {
-                                throw cException("no type specified for
-cElementLoadVn", __FILE__, __LINE__);
-                        }
-        //	}
-        //  else
-        //	{
-        //	throw cException("UNABLE TO EVALUATE ELEMENT LOAD ON FLUID -
-NEED COMPLEX NUMBERS", __FILE__, __LINE__);
-        //	}
+	 // if (m_AnalysisType == Time)  
+	//	{
+			if (ptrVn->getType() == vn || ptrVn->getType() == flux)
+				Vn.setValue( ptrVn->getValue() );
+			else
+			{
+				throw cException("no type specified for cElementLoadVn", __FILE__, __LINE__);
+			}
+	//	}
+	//  else
+	//	{
+	//	throw cException("UNABLE TO EVALUATE ELEMENT LOAD ON FLUID - NEED COMPLEX NUMBERS", __FILE__, __LINE__);
+	//	}
 #endif
+
       evaluateSurfaceIntegral(itLoads->first - 1, Nface, C);
 
-          for (int z=0; z<nnod_face; z++)
+	  for (int z=0; z<nnod_face; z++)
       for (int s=0; s<nnod_face; s++)
         LV[Inzidenz[z]] += C(z,s) * Vn[s];
     }
-*/
   }
+
 
   // --- for symmetric formulation
   const PetscScalar factor = 1. / (m_Material->getRhoOmega() * omega * omega);
   infam::scale(LV, factor);
 
+
   // additional factor, if fluid is an equivalent fluid
   /*cMaterialFluidEquiv *ptrE = dynamic_cast<cMaterialFluidEquiv *>(m_Material);
   if (ptrE != NULL) {
-        infam::scale(LV, ptrE->getCouplingFactor());
+	infam::scale(LV, ptrE->getCouplingFactor());
   }*/
 }
 

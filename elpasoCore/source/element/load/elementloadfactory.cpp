@@ -21,6 +21,7 @@
 
 #include "../../misc/parser/femparserinterface.h"
 #include "elementload.h"
+#include "elementloadvn.h"
 
 cElementLoadFactory::cElementLoadFactory() {
   // empty
@@ -33,6 +34,14 @@ cElementLoadFactory::~cElementLoadFactory() {
 cElementLoad* cElementLoadFactory::createElementLoad(
     ParserElementLoadsData _data) {
   cElementLoad* ptrElemLoad = 0;
-  // none implemented - refer to research module
+  
+  std::stringstream data;
+  if (_data.eloadType == "vn")
+  {
+      ptrElemLoad = new cElementLoadVn(vn);
+      data << _data.eloadId << " " << _data.eloadVelocity << " ";
+      data >> *ptrElemLoad;
+  }
+
   return ptrElemLoad;
 }

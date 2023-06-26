@@ -456,7 +456,7 @@ void cFemParserInterface::parseElementLoadsEntity(cProblem &userData)
             // assign the cooresponding element with the load
             int ElementId = readData.eloadElementId;
             cElementFEM* ptrElement = userData.getMesh()->getElement(ElementId);
-            ptrElement->insertElementLoad(readData.eloadFace, userData.getMesh()->getElementLoad(Id));
+            ptrElement->insertElementLoad(readData.eloadFace, userData.getMesh()->getElementLoad(readData.eloadId));
             ptrElement = 0;
         }
     }
